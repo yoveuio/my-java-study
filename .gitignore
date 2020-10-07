@@ -1,0 +1,7 @@
+# Project exclude paths
+/algorithm/target/
+/class/target/
+/java-basic/target/
+/netty_study/target/
+/out/
+/tomcat-study/target/
