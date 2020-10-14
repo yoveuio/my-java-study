@@ -14,7 +14,8 @@ import java.util.concurrent.CountDownLatch;
  */
 public class AsyncTimeServerHandler implements Runnable{
     private int port;
-
+    //允许一个或多个线程等待指导在其他线程中执行的一组操作完成的同步辅助
+    //简单来说就是让一个或多个操作等待，直到所有前置操作都完成
     CountDownLatch latch;
     AsynchronousServerSocketChannel asynchronousServerSocketChannel;
 

@@ -1,4 +1,0 @@
--- listing properties --
-hello=hello world!
-2=How are you?
-1=I am fine!

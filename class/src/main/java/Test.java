@@ -1,3 +1,5 @@
+import homework.aysn.Bank;
+
 import java.io.*;
 import java.lang.invoke.MethodHandle;
 import java.nio.charset.Charset;
@@ -42,6 +44,8 @@ public class Test{
         while(enumeration.hasMoreElements()) {
             System.out.println(properties.getProperty((String) enumeration.nextElement()));
         }
+
+
     }
 
 

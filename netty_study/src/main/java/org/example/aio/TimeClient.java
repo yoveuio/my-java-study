@@ -14,5 +14,4 @@ public class TimeClient {
         String host = "127.0.0.1";
         new Thread(new AsyncTimeClientHandler(host, port), "AIO-AsyncTimeClientHandler").start();
     }
-
 }

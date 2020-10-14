@@ -6,7 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="java-basic" />
         <module name="thread-study" />
         <module name="class" />
         <module name="netty_study" />
@@ -15,6 +14,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="java-basic" target="1.7" />
       <module name="thread-study" target="1.8" />
     </bytecodeTargetLevel>
   </component>

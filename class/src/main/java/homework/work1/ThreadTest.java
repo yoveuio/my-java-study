@@ -13,6 +13,7 @@ public class ThreadTest {
         int sum;
         @Override
         public void run() {
+
             sum = 0;
             for (int i=1; i<=100; ++i) {
                 sum += i;
@@ -20,7 +21,6 @@ public class ThreadTest {
             System.out.println(sum);
         }
     }
-
     static class PrintA implements Runnable {
         @Override
         public void run() {
