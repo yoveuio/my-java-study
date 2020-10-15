@@ -6,7 +6,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * @ClassName GroupTest
- * @Description TODO
+ * @Description 关于算法的学习笔记
  * @Author yoveuio
  * @Date 2020/7/27 10:30
  * @Version 1.0

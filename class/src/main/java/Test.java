@@ -16,11 +16,18 @@ import static java.lang.invoke.MethodHandles.lookup;
  */
 public class Test{
 
+    ThreadLocal<Integer> local = new ThreadLocal<>();
+
     public static <E extends Number> List<? super E> process(List<E> list) {
         return list;
     }
 
     public static void main(String[] args) throws IOException {
+        try {
+            Thread.currentThread().wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Properties properties = new Properties();
         Writer writer = new FileWriter("hello.txt");
 
