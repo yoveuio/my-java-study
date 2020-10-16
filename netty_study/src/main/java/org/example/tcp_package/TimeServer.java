@@ -17,6 +17,15 @@ import java.net.InetSocketAddress;
 /**
  * @ClassName TimeServer
  * @Description TimeServer
+ *  利用LineBasedFrameDecoder解决TCP粘包和拆包问题
+ *  工作原理：
+ *  依次遍历ByteBuf中的可读字节，判断是否有'\n'或者'\r\n',如果有，就以此位置为结束位置，
+ *  从可读索引到结束位置区间的字节就组成了一行。同时支持配置单行的最大长度。
+ *  如果连续读取到最大长度后仍然没有发现换行符，就会抛出异常，同时忽略吊之前读到的异常码流。
+ *
+ *  StringDecoder：
+ *  此功能非常简单，就是将接收到的对象转换成字符串，然后继续调用后面的Handler。
+ *  LineBasedFrameDecoder+StringDecoder就是换行切换的文本解码器
  * @Author yoveuio
  * @Date 2020/10/15 19:46
  * @Version 1.0

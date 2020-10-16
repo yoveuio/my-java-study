@@ -20,6 +20,7 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        //msg已经被StringDecoder译码为String类型
         String body = (String) msg;
         System.out.println("The time server receive order : " + body +
                 " ; the counter is : " + ++counter);

@@ -41,6 +41,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        //msg已经被StringDecoder译码为String类型
         String body = (String)msg;
         System.out.println("Now is : " + body + " : the counter is : " + ++counter);
     }
