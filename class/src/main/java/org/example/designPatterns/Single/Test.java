@@ -64,9 +64,10 @@ public class Test {
         public static Singleton3 getInstance() {
             if (instance == null) {
                 synchronized (Singleton3.class) {
-                    instance = new Singleton3();
+                    if (instance == null) {
+                        instance = new Singleton3();
+                    }
                 }
-
             }
             return instance;
         }
