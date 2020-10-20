@@ -1,17 +1,23 @@
 package org.example.lock;
 
+import org.example.layout.Test;
+
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @ClassName AQSTest
- * @Description TODO
+ * @Description 条件变量condition
  * @Author yoveuio
  * @Date 2020/10/18 21:35
  * @Version 1.0
  */
 public class AQSTest {
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         // 创建了一个独占锁ReentrantLock对象，ReentrantLock是基于AQS实现的锁。
         Lock lock = new ReentrantLock();
@@ -43,5 +49,16 @@ public class AQSTest {
                 lock.unlock();
             }
         }).start();
+
+    }
+
+    void test(){
+        synchronized (this) {
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

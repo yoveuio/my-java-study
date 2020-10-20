@@ -8,7 +8,7 @@ package homework.aysn;
  * @Version 1.0
  */
 public class Bank {
-    private int account;
+    private volatile int account;
 
     public Bank(int account) {
         this.account = account;
@@ -18,7 +18,7 @@ public class Bank {
      * 向账户存入money元
      * @param money 存入的钱
      */
-    public void deposit(int money) {
+    public synchronized void deposit(int money) {
         if (money < 0) money = 0;
         account += money;
         System.out.println(Thread.currentThread().getName() + "  账户的余额是：" + getAccount());
