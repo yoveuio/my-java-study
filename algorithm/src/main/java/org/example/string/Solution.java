@@ -1,7 +1,9 @@
 package org.example.string;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @ClassName Solution
@@ -11,6 +13,31 @@ import java.util.Arrays;
  * @Version 1.0
  */
 public class Solution {
+
+    /**
+     * 将一个字符串尽可能的分割，保证每个字母只会出现在一个片段中
+     * 解法：贪心+双指针
+     * 记录开始位置和结束位置。保证片段中的每一对start-end都在范围内即可
+     * @param S 被分割的字符串
+     * @return 返回分割后的下标
+     */
+    public List<Integer> partitionLabels(String S) {
+        int[] last = new int[26];
+        int length = S.length();
+        for (int i = 0; i < length; i++) {
+            last[S.charAt(i) - 'a'] = i;
+        }
+        List<Integer> partition = new ArrayList<Integer>();
+        int start = 0, end = 0;
+        for (int i = 0; i < length; i++) {
+            end = Math.max(end, last[S.charAt(i) - 'a']);
+            if (i == end) {
+                partition.add(end - start + 1);
+                start = end + 1;
+            }
+        }
+        return partition;
+    }
 
     /**
      * 把字符串s中的每个空格替换成"%20"
