@@ -2,8 +2,7 @@ package org.example.list;
 
 import org.example.leetcode.ListNode;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName Solution
@@ -13,6 +12,24 @@ import java.util.Map;
  * @Version 1.0
  */
 public class Solution {
+
+    public int[] reversePrint(ListNode head) {
+        List<Integer> answerList = new ArrayList<>();
+        ListNode prev = null, tail = head;
+        while(tail != null) {
+            ListNode node = tail;
+            tail = tail.next;
+            node.next = prev;
+            prev = node;
+            answerList.add(prev.val);
+        }
+        Collections.reverse(answerList);
+        int[] answer = new int[answerList.size()];
+        for (int i=0; i<answer.length; ++i) {
+            answer[i] = answerList.get(i);
+        }
+        return answer;
+    }
 
     /**
      * 反转链表:
