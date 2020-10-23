@@ -13,6 +13,26 @@ import java.util.*;
  */
 public class Solution {
 
+    /**
+     * 通过hash公式
+     * hash = a[1]*seed^0 + ... + a[n]*seed^n-1
+     * 由于是回文数组，逆序链表的hash应该是相同的
+     * @param head 链表头节点
+     * @return 返回是否回文链表
+     */
+    public boolean isPalindrome(ListNode head) {
+        long hash1 = 0, hash2 = 0, h = 1;
+        long seed = (long) (1e9 + 7);
+        ListNode p = head;
+        while (p != null) {
+            hash1 = hash1 * seed + p.val;
+            hash2 = hash2 + h * p.val;
+            h *= seed;
+            p = p.next;
+        }
+        return hash1 == hash2;
+    }
+
     public int[] reversePrint(ListNode head) {
         List<Integer> answerList = new ArrayList<>();
         ListNode prev = null, tail = head;

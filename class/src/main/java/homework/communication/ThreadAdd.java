@@ -16,6 +16,7 @@ public class ThreadAdd extends Thread {
 
     public void run() {
         p.add();
+        p.add();
     }
 
 } //删除list中的一个元素的线程
