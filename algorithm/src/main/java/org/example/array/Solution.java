@@ -13,6 +13,46 @@ import java.util.*;
  */
 public class Solution {
 
+    int mod = (int) (1e9+7);
+
+    public int fib(int n) {
+        int[] a = new int[101];
+        a[0] = 0;
+        a[1] = 1;
+        for (int i=2; i<=n; ++i) {
+            a[i] = (a[i-1]*a[i])%mod;
+        }
+        return a[n];
+    }
+
+    /**
+     * 贪心算法解决最少子区间合并大区间问题
+     *      使用maxn数组，记录下标为n的数组到达的最远长度
+     * @param clips
+     * @param T
+     * @return
+     */
+    public int videoStitching(int[][] clips, int T) {
+        int[] maxn = new int[T];
+        int last = 0, ret = 0, pre = 0;
+        for (int[] clip : clips) {
+            if (clip[0] < T) {
+                maxn[clip[0]] = Math.max(maxn[clip[0]], clip[1]);
+            }
+        }
+        for (int i = 0; i < T; i++) {
+            last = Math.max(last, maxn[i]);
+            if (i == last) {
+                return -1;
+            }
+            if (i == pre) {
+                ret++;
+                pre = last;
+            }
+        }
+        return ret;
+    }
+
     public List<String> commonChars(String[] A) {
         int[][] letter = new int[A.length][26];
         List<String> list = new ArrayList<>();
@@ -27,7 +67,9 @@ public class Solution {
             int min = 0x3f3f3f3f;
             for (int[] ints : letter) {
                 min = Math.min(ints[i], min);
-                if (min < 0) break;
+                if (min < 0) {
+                    break;
+                }
             }
             for (int j = 0; j < min; ++j) {
                 char a = (char) ('a' + i);
