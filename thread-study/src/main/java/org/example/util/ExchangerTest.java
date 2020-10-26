@@ -29,11 +29,12 @@ public class ExchangerTest {
                 String B = "银行流水B";
                 String A = exgr.exchange(B);
                 System.out.println("A和B数据是否一直:" + A.equals(B));
+                System.out.println("A录入的是:" + A);
+                System.out.println("B录入的是:" + B);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
         threadPool.shutdown();
     }
-
 }
