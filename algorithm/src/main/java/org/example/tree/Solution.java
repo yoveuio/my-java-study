@@ -14,12 +14,13 @@ import java.util.HashMap;
  */
 public class Solution {
 
+    /**
+     * 通过前序遍历和中序遍历确定一颗二叉树
+     */
     int root;
-
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         root = 0;
-        TreeNode head = buildTree(0, preorder.length-1, preorder, inorder);
-        return head;
+        return buildTree(0, preorder.length-1, preorder, inorder);
     }
 
     private TreeNode buildTree(int l, int r, int[] preorder, int[] inorder){

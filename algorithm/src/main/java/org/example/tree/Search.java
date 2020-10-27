@@ -2,10 +2,7 @@ package org.example.tree;
 
 import org.example.leetcode.TreeNode;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName Search
@@ -21,7 +18,6 @@ public class Search {
      * 用栈实现二叉树的前序遍历
      */
     public static List<Integer> preorderTraversal(TreeNode root) {
-        TreeNode first = root;
         Deque<TreeNode> stack = new LinkedList<>();
         List<Integer> answer = new LinkedList<>();
 
@@ -44,15 +40,46 @@ public class Search {
      * 用栈实现二叉树的中序遍历
      */
     public static List<Integer> inorderTraversal(TreeNode root) {
-        return null;
+        Deque<TreeNode> stack = new LinkedList<>();
+        List<Integer> answer = new LinkedList<>();
+
+        while(!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            answer.add(root.val);
+            root = root.right;
+        }
+
+        return answer;
     }
 
+    public static List<Integer> postorderTraversal(TreeNode root) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        List<Integer> answer = new LinkedList<>();
+
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            root = stack.pop();
+            answer.add(root.val);
+            if (root.left != null) {
+                stack.push(root.left);
+            }
+            if (root.right != null) {
+                stack.push(root.right);
+            }
+        }
+        Collections.reverse(answer);
+        return answer;
+    }
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
         root.right = new TreeNode(2);
         root.right.left = new TreeNode(3);
-        System.out.println(Search.preorderTraversal(root));
+        System.out.println(Search.postorderTraversal(root));
     }
 
 }
