@@ -55,9 +55,10 @@ public class Test {
 
     /**
      * 懒汉式双锁机制
+     * 注意实例对象应该加上volatile关键字,避免new Singleton初始化和引用之间的重排序
      */
     public static class Singleton3{
-        private static Singleton3 instance;
+        private volatile static Singleton3 instance;
         private Singleton3(){
 
         }
@@ -70,6 +71,16 @@ public class Test {
                 }
             }
             return instance;
+        }
+    }
+
+    public static class Singleton4{
+        private static class SingletonHandler{
+            private static final Singleton4 instance = new Singleton4();
+        }
+        private Singleton4(){}
+        public static Singleton4 getInstance(){
+            return SingletonHandler.instance;
         }
     }
 

@@ -13,16 +13,29 @@ import java.util.*;
  */
 public class Solution {
 
-    int mod = (int) (1e9+7);
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> occur = new HashMap<Integer, Integer>();
+        for (int x : arr) {
+            occur.put(x, occur.getOrDefault(x, 0) + 1);
+        }
+        Set<Integer> times = new HashSet<Integer>();
+        for (Map.Entry<Integer, Integer> x : occur.entrySet()) {
+            times.add(x.getValue());
+        }
+        return times.size() == occur.size();
+    }
+
+    int mod = (int) (1e9 + 7);
 
     /**
      * 计数排序记录小于当前数字的数字
      * 给你一个数组nums，对于其中每个元素nums[i]，请你统计数组中比它小的所有数字的数目。
      * 换而言之，对于每个nums[i]你必须计算出有效的j的数量，其中 j 满足j != i 且 nums[j] < nums[i]
      * 以数组形式返回答案。
-     *
+     * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/how-many-numbers-are-smaller-than-the-current-number
+     *
      * @param nums
      * @return
      */
@@ -35,13 +48,13 @@ public class Solution {
 
         int carry = answers[0];
         answers[0] = 0;
-        for (int i=0; i < answers.length-1; ++i) {
-            int temp = answers[i+1];
-            answers[i+1] = answers[i] + carry;
+        for (int i = 0; i < answers.length - 1; ++i) {
+            int temp = answers[i + 1];
+            answers[i + 1] = answers[i] + carry;
             carry = temp;
         }
 
-        for (int i=0; i < nums.length; ++i) {
+        for (int i = 0; i < nums.length; ++i) {
             nums[i] = answers[nums[i]];
         }
         return nums;
@@ -51,15 +64,16 @@ public class Solution {
         int[] a = new int[101];
         a[0] = 0;
         a[1] = 1;
-        for (int i=2; i<=n; ++i) {
-            a[i] = (a[i-1]*a[i])%mod;
+        for (int i = 2; i <= n; ++i) {
+            a[i] = (a[i - 1] * a[i]) % mod;
         }
         return a[n];
     }
 
     /**
      * 贪心算法解决最少子区间合并大区间问题
-     *      使用maxn数组，记录下标为n的数组到达的最远长度
+     * 使用maxn数组，记录下标为n的数组到达的最远长度
+     *
      * @param clips
      * @param T
      * @return
