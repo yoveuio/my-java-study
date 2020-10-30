@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+<!--对AOP进行配置-->
+    <aop:config>
+<!--        配置切面: 配置通知和切入点的关系，并将通知和切入点配置成受Spring管理的Bean
+        ref指明哪个类是通知-->
+        <aop:aspect ref="advice">
+<!--            配置切面并将通知类和目标对象关联，关联使用execution表达式-->
+            <aop:before method="printOne" pointcut="execution(public void org.example.demo.Target.method1())"/>
+        </aop:aspect>
+    </aop:config>
+
+
+<!--    目标对象-->
+    <bean id="target" class="org.example.demo.Target"/>
+<!--    通知-->
+    <bean id="advice" class="org.example.demo.MyAdvice"/>
+</beans>

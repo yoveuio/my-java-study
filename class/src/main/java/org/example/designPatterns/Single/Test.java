@@ -1,8 +1,8 @@
 package org.example.designPatterns.Single;
 
 /**
- * @ClassName Tets
- * @Description TODO
+ * @ClassName Test
+ * @Description 单例模式：
  * @Author yoveuio
  * @Date 2020/9/27 17:42
  * @Version 1.0
@@ -10,6 +10,17 @@ package org.example.designPatterns.Single;
 public class Test {
 
     static Test test;
+
+    /**
+     * 饿汉式，一般情况下使用
+     */
+    public static class Singleton {
+        private static Singleton instance = new Singleton();
+        private Singleton(){}
+        private static Singleton getInstance(){
+            return instance;
+        }
+    }
 
     /**
      * 懒汉式，线程不安全
@@ -84,9 +95,16 @@ public class Test {
         }
     }
 
+    /**
+     * 设计到反序列化创建单例对象的时候可以考虑使用enum创建实例
+     */
+    public enum Singleton5 {
+        INSTANCE;
+        public void whateverMethod(){}
+    }
+
     public static void main(String[] args) {
         Singleton1 instance = Singleton1.getInstance();
-
         new Thread(instance, "thread1").start();
         new Thread(instance, "Thread2").start();
         new Thread(instance, "Thread3").start();
