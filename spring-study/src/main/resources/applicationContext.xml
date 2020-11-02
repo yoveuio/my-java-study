@@ -14,9 +14,11 @@
     <aop:config>
 <!--        配置切面: 配置通知和切入点的关系，并将通知和切入点配置成受Spring管理的Bean
         ref指明哪个类是通知-->
+        <aop:pointcut id="method" expression="execution(void *..method*())"/>
+
         <aop:aspect ref="advice">
 <!--            配置切面并将通知类和目标对象关联，关联使用execution表达式-->
-            <aop:before method="printOne" pointcut="execution(public void org.example.demo.Target.method1())"/>
+            <aop:before method="printOne" pointcut-ref="method"/>
         </aop:aspect>
     </aop:config>
 
