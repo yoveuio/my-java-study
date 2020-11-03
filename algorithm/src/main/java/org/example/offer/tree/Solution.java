@@ -2,10 +2,7 @@ package org.example.offer.tree;
 
 import org.example.leetcode.TreeNode;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @ClassName Solution
@@ -16,6 +13,31 @@ import java.util.Set;
  */
 public class Solution {
 
+    /**
+     * 层次打印二叉树
+     */
+    public int[] levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        int[] answer;
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+        answer = new int[queue.size()];
+
+        return answer;
+    }
+
+    /**
+     * 判断是否是对称二叉树
+     */
     public boolean isSymmetric(TreeNode root) {
         if (root == null) return false;
         return isSymmetricHandler(root.left, root.right);
@@ -29,8 +51,8 @@ public class Solution {
 
     /**
      * 镜像二叉树，将左右子树替换
-     * @param root
-     * @return
+     * @param root 根节点
+     * @return 返回镜像二叉树
      */
     public TreeNode mirrorTree(TreeNode root) {
         if (root == null) return null;

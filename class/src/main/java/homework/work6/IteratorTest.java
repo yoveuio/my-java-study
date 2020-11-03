@@ -15,8 +15,9 @@ import java.util.concurrent.Executors;
  * @Date 2020/10/29 10:51
  * @Version 1.0
  */
+/*
 public class IteratorTest {
-    Set<Integer> set = new CopyOnWriteArraySet<Integer>() {{
+    Set<Integer> set = new HashSet<Integer>() {{
         add(1);
         add(2);
         add(3);
@@ -40,4 +41,34 @@ public class IteratorTest {
         executorService.execute(iteratorTest::print);
         executorService.shutdown();
     }
+}
+*/
+
+
+public class IteratorTest {
+    HashSet<Integer> set = new HashSet<Integer>();
+
+    public IteratorTest() {
+        set.add(1);
+        set.add(2);
+    }
+
+    public void addSet() {
+        set.add(3);
+    }
+
+    public void printSet() {
+        for (Integer i : set) {
+            System.out.println(i);
+        }
+    }
+
+    public static void main(String[] args) {
+        IteratorTest test = new IteratorTest();
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        executorService.execute(test::printSet);
+        executorService.execute(test::addSet);
+        executorService.shutdown();
+    }
+
 }

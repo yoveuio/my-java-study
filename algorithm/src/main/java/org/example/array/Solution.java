@@ -11,6 +11,34 @@ import java.util.*;
  */
 public class Solution {
 
+    /**
+     * 判断一个山脉数组
+     */
+    public boolean validMountainArray(int[] A) {
+        int N = A.length;
+        int i = 0;
+
+        // 递增扫描
+        while (i + 1 < N && A[i] < A[i + 1]) {
+            i++;
+        }
+
+        // 最高点不能是数组的第一个位置或最后一个位置
+        if (i == 0 || i == N - 1) {
+            return false;
+        }
+
+        // 递减扫描
+        while (i + 1 < N && A[i] > A[i + 1]) {
+            i++;
+        }
+
+        return i == N - 1;
+    }
+
+    /**
+     * 求两个数组的并集
+     */
     public int[] intersection(int[] nums1, int[] nums2) {
         Set<Integer> set1 = new HashSet<>();
         Set<Integer> set2 = new HashSet<>();
@@ -33,11 +61,11 @@ public class Solution {
     }
 
     public boolean uniqueOccurrences(int[] arr) {
-        Map<Integer, Integer> occur = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> occur = new HashMap<>();
         for (int x : arr) {
             occur.put(x, occur.getOrDefault(x, 0) + 1);
         }
-        Set<Integer> times = new HashSet<Integer>();
+        Set<Integer> times = new HashSet<>();
         for (Map.Entry<Integer, Integer> x : occur.entrySet()) {
             times.add(x.getValue());
         }
@@ -55,8 +83,6 @@ public class Solution {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/how-many-numbers-are-smaller-than-the-current-number
      *
-     * @param nums
-     * @return
      */
     public int[] smallerNumbersThanCurrent(int[] nums) {
         int[] answers = new int[101];
@@ -92,10 +118,6 @@ public class Solution {
     /**
      * 贪心算法解决最少子区间合并大区间问题
      * 使用maxn数组，记录下标为n的数组到达的最远长度
-     *
-     * @param clips
-     * @param T
-     * @return
      */
     public int videoStitching(int[][] clips, int T) {
         int[] maxn = new int[T];
