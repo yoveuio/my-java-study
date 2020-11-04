@@ -14,15 +14,38 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 层次打印二叉树，并将结果每一层的结果单独存储
+     */
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        if(root != null) queue.add(root);
+        while(!queue.isEmpty()) {
+            List<Integer> tmp = new ArrayList<>();
+            for(int i = queue.size(); i > 0; i--) {
+                TreeNode node = queue.poll();
+                tmp.add(node.val);
+                if(node.left != null) queue.add(node.left);
+                if(node.right != null) queue.add(node.right);
+            }
+            res.add(tmp);
+        }
+        return res;
+    }
+
+    /**
      * 层次打印二叉树
+     * @return
      */
     public int[] levelOrder(TreeNode root) {
         Queue<TreeNode> queue = new ArrayDeque<>();
+        List<Integer> answerList = new ArrayList<>();
         int[] answer;
         queue.add(root);
 
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
+            answerList.add(node.val);
             if (node.left != null) {
                 queue.add(node.left);
             }
@@ -30,8 +53,10 @@ public class Solution {
                 queue.add(node.right);
             }
         }
-        answer = new int[queue.size()];
-
+        answer = new int[answerList.size()];
+        for (int i = 0; i<answerList.size(); ++i) {
+            answer[i] = answerList.get(i);
+        }
         return answer;
     }
 

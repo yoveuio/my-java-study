@@ -1,11 +1,6 @@
-import homework.aysn.Bank;
-
 import java.io.*;
-import java.lang.invoke.MethodHandle;
 import java.nio.charset.Charset;
 import java.util.*;
-
-import static java.lang.invoke.MethodHandles.lookup;
 
 /**
  * @ClassName Test
