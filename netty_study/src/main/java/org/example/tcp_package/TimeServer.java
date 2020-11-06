@@ -11,7 +11,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import sun.applet.AppletClassLoader;
 
+import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 
 /**
@@ -50,9 +52,10 @@ public class TimeServer {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
+                        //依次遍历ByteBuf中的可读字节，判断是否有'\n'或者'\r\n',如果有，就以此位置为结束位置
                         ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
+                        //对String进行编码解码，不需要再对字节进行处理
                         ch.pipeline().addLast(new StringDecoder());
-
                         ch.pipeline().addLast(new StringEncoder());
                         ch.pipeline().addLast(new TimeServerHandler());
                     }
