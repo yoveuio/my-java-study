@@ -13,6 +13,29 @@ import java.util.Deque;
  * @Version 1.0
  */
 public class Solution {
+
+    /**
+     * 反转链表(迭代法):
+     *     public ListNode reverseList(ListNode head) {
+     *         ListNode prev = null;
+     *         ListNode curr = head;
+     *         while (curr != null) {
+     *             ListNode node = curr.next;
+     *             curr.next = prev;
+     *             prev = curr;
+     *             curr = node;
+     *         }
+     *         return prev;
+     *     }
+     */
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode node = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return node;
+    }
+
     /**
      * 判断栈的压入压出是否满足要求
      * Stack<Integer> stack = new Stack<>();

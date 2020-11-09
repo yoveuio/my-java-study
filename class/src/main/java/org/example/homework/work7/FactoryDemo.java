@@ -7,7 +7,7 @@ import java.util.Properties;
 
 /**
  * @ClassName FactoryDemo
- * @Description TODO
+ * @Description 通过配置文件+反射优化工厂模式
  * @Author yoveuio
  * @Date 2020/11/5 11:30
  * @Version 1.0

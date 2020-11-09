@@ -20,9 +20,6 @@ public class Solution {
      *      通过二分/二进制的性质，求x^n
      *          n = f(n) = 1*b1 + 2*b2 + …… + 2^(m-1)*bm
      *          其中
-     * @param x
-     * @param n
-     * @return
      */
     public double myPow(double x, int n) {
         if(x == 0) return 0;
