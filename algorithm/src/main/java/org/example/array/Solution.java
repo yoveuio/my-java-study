@@ -12,6 +12,48 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 下一个排列
+     *
+     */
+    public void nextPermutation(int[] nums) {
+        if (nums.length == 0 || nums.length == 1) return;
+        for (int index = nums.length-2; index >= 0; --index) {
+            if (nums[index] < nums[index+1]) {
+                for (int j=nums.length-1; j > index; --j) {
+                    if (nums[index] < nums[j]) {
+                        swap(nums, index, j);
+                        reverse(nums, index+1);
+                        return;
+                    }
+                }
+            }
+            else {
+                if (index == 0) {
+                    reverse(nums, 0);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void reverse(int[] nums, int start) {
+        int left = start, right = nums.length - 1;
+        while (left < right) {
+            swap(nums, left, right);
+            left++;
+            right--;
+        }
+    }
+
+    void swap(int[] nums, int x, int y) {
+        if (x == y) return;
+        nums[x] ^= nums[y];
+        nums[y] ^= nums[x];
+        nums[x] ^= nums[y];
+
+    }
+
+    /**
      * 插入区间
      * @param intervals 原来的区间，二维数组intervals[left][right]。每一维有两个数字
      * @param newInterval 插入的区间
