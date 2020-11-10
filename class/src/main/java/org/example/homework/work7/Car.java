@@ -2,6 +2,7 @@ package org.example.homework.work7;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @ClassName Car
@@ -36,9 +37,12 @@ public class Car {
         Class<Car> carClass = Car.class;
         Constructor<Car> constructor = carClass.getConstructor();
         Car car = constructor.newInstance();
-        car.setBrand("f1");
-        car.setColor("粉色");
-        car.setMaxSpeed(1200);
+        Method setBrand = carClass.getMethod("setBrand", String.class);
+        Method setColor = carClass.getMethod("setColor", String.class);
+        Method setMaxSpeed = carClass.getMethod("setMaxSpeed", int.class);
+        setBrand.invoke(car, "f1");
+        setColor.invoke(car, "粉色");
+        setMaxSpeed.invoke(car, 1200);
         System.out.println(car);
     }
 }
