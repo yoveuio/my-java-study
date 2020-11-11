@@ -23,8 +23,8 @@ public class Student {
     }
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
-        Student student = new Student();
-        Class<? extends Student> aClass = student.getClass();
+        Class<? extends Student> aClass = Student.class;
+        ClassLoader classLoader = aClass.getClassLoader();
         Method[] methods = aClass.getMethods();
         int a, b, c;
         for (Method method : methods) {
@@ -34,7 +34,7 @@ public class Student {
                     a = annotation.a();
                     b = annotation.b();
                     c = annotation.c();
-                    method.invoke(student, a, b, c);
+                    method.invoke(null, a, b, c);
                 }
             }
         }
