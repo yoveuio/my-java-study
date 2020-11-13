@@ -14,6 +14,84 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 奇偶链表，将一个链表的所有的奇节点排序在一起，偶节点排序在一起
+     * 题解：
+     * public ListNode oddEvenList(ListNode head) {
+     *     if (head == null) {
+     *         return head;
+     *     }
+     *     ListNode evenHead = head.next;
+     *     ListNode odd = head, even = evenHead;
+     *     while (even != null && even.next != null) {
+     *         odd.next = even.next;
+     *         odd = odd.next;
+     *         even.next = odd.next;
+     *         even = even.next;
+     *     }
+     *     odd.next = evenHead;
+     *     return head;
+     * }
+     * https://leetcode-cn.com/problems/odd-even-linked-list/
+     */
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null) return null;
+        ListNode odd, sentinelOdd;
+        ListNode even, sentinelEven;
+        boolean flag = false;
+
+        sentinelOdd = new ListNode(-1);
+        sentinelEven = new ListNode(-1);
+        odd = sentinelOdd;
+        even = sentinelEven;
+        while (head != null) {
+            if (!flag) {
+                odd.next = head;
+                head = head.next;
+                odd = odd.next;
+            }
+            else {
+                even.next = head;
+                head = head.next;
+                even = even.next;
+            }
+            flag = !flag;
+        }
+        odd.next = sentinelEven.next;
+        even.next = null;
+
+        return sentinelOdd.next;
+    }
+
+    /**
+     * 两数相加，
+     * 列表数字逆序存储，返回相加的结果
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode pre = new ListNode(0);
+        ListNode cur = pre;
+        int carry = 0;
+        while(l1 != null || l2 != null) {
+            int x = l1 == null ? 0 : l1.val;
+            int y = l2 == null ? 0 : l2.val;
+            int sum = x + y + carry;
+
+            carry = sum / 10;
+            sum = sum % 10;
+            cur.next = new ListNode(sum);
+
+            cur = cur.next;
+            if(l1 != null)
+                l1 = l1.next;
+            if(l2 != null)
+                l2 = l2.next;
+        }
+        if(carry == 1) {
+            cur.next = new ListNode(carry);
+        }
+        return pre.next;
+    }
+
+    /**
      * 通过hash公式
      * hash = a[1]*seed^0 + ... + a[n]*seed^n-1
      * 由于是回文数组，逆序链表的hash应该是相同的
