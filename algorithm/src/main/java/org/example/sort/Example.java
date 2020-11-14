@@ -25,8 +25,8 @@ public class Example {
         //在单行中打印数组
         for (Comparable<T> tComparable : a) {
             System.out.print(tComparable + "");
-            System.out.println();
         }
+        System.out.println();
     }
     public static <T> boolean isSorted(Comparable<T>[] a){
         //测试数组元素是否有序

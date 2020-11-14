@@ -12,6 +12,61 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 排序数组
+     */
+    public int[] sortArray(int[] nums) {
+        sortArrayHandle(0, nums.length-1, nums);
+        return nums;
+    }
+
+    private void sortArrayHandle(int lo, int hi, int[] nums) {
+        if (hi <= lo) return;
+        int i = lo, j = hi+1;
+        int standard = nums[lo];
+        while (true) {
+            while (nums[++i] < standard) if (i == hi) break;
+            while (nums[--j] > standard) if (j == lo) break;
+            if (i >= j) break;
+            swap(nums, i, j);
+        }
+        swap(nums, lo, j);
+        sortArrayHandle(lo, j - 1, nums);
+        sortArrayHandle(j + 1, hi, nums);
+    }
+
+    void swap(int[] nums, int x, int y) {
+        if (x == y) return;
+        nums[x] ^= nums[y];
+        nums[y] ^= nums[x];
+        nums[x] ^= nums[y];
+    }
+
+
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i: arr1) {
+            Integer result = map.getOrDefault(i, 0);
+            map.put(i, result+1);
+        }
+
+        int count = 0;
+        for (int i: arr2) {
+            Integer integer = map.getOrDefault(i, 0);
+            while (integer-- != 0) {
+                arr1[count++] = i;
+            }
+            map.remove(i);
+        }
+        Integer[] sets = (Integer[]) map.keySet().toArray();
+        Arrays.sort(sets);
+        for (int i: sets) {
+            arr1[count++] = i;
+        }
+
+        return arr1;
+    }
+
+    /**
      * 下一个排列
      *
      */
@@ -45,13 +100,7 @@ public class Solution {
         }
     }
 
-    void swap(int[] nums, int x, int y) {
-        if (x == y) return;
-        nums[x] ^= nums[y];
-        nums[y] ^= nums[x];
-        nums[x] ^= nums[y];
 
-    }
 
     /**
      * 插入区间
