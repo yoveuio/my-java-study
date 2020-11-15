@@ -19,6 +19,38 @@ class Solution {
     }
 
     /**
+     * 给定一个以字符串表示的非负整数 num，移除这个数中的 k 位数字，使得剩下的数字最小
+     * 单调栈+贪心解法
+     */
+    public String removeKdigits(String num, int k) {
+        Deque<Character> stack = new ArrayDeque<>();
+        for (char c: num.toCharArray()) {
+            while (k != 0 && !stack.isEmpty() && stack.peek() > c) {
+                stack.pop();
+                k--;
+            }
+            stack.push(c);
+        }
+        for (int i=0; i<k; ++i) {
+            stack.pop();
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char c: stack) {
+            stringBuilder.append(c);
+        }
+        stringBuilder.reverse();
+        int index = 0;
+        for (char c: stringBuilder.toString().toCharArray()) {
+            if (c != '0') {
+                break;
+            }
+            else index++;
+        }
+        String answer = stringBuilder.substring(index);
+        return Objects.equals(answer, "") ? "0" : answer;
+    }
+
+    /**
      * 最大的整数次方
      *  快速幂：
      *      通过二分/二进制的性质，求x^n
