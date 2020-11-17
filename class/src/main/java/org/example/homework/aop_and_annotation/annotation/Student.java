@@ -1,6 +1,5 @@
 package org.example.homework.aop_and_annotation.annotation;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -16,15 +15,12 @@ public class Student {
     @RepeatableAnnotation(a = 1, b = 2, c = 4)
     public static void add(int a, int b, int c) {
         if (c != a + b) {
-            System.out.println(2);
             throw new ArithmeticException("Wrong");
         }
-        System.out.println(1);
     }
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
         Class<? extends Student> aClass = Student.class;
-        ClassLoader classLoader = aClass.getClassLoader();
         Method[] methods = aClass.getMethods();
         int a, b, c;
         for (Method method : methods) {

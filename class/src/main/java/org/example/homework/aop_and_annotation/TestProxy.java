@@ -22,7 +22,5 @@ public class TestProxy {
         Dog dog = (Dog) MyProxyFactory.getProxy(t2);
         dog.info();
         dog.run();
-
-
     }
 }
