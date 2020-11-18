@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="spring-study" />
         <module name="thread-study" />
+        <module name="my_web_study" />
         <module name="class" />
         <module name="netty_study" />
         <module name="tomcat-study" />
