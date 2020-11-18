@@ -13,6 +13,36 @@ class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
+        int i = solution.canCompleteCircuit(new int[]{3, 3, 4}, new int[]{3, 4, 4});
+        System.out.println(i);
+    }
+
+    /**
+     * 加油站
+     * @param gas 第i能补充的油
+     * @param cost 第i到i+1消耗的油
+     * @return 返回能够走完一个环的第一个起点
+     */
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        for (int i = 0; i < gas.length; ++i) {
+            gas[i] -= cost[i];
+        }
+
+        label:
+        for (int i = 0; i < gas.length;) {
+            int carry = 0;
+            int count = 0;
+            while (count < gas.length) {
+                carry += gas[(count + i) % gas.length];
+                if (carry < 0) {
+                    i = i+count+1;
+                    continue label;
+                }
+                count++;
+            }
+            return i;
+        }
+        return -1;
     }
 
     /**
@@ -32,13 +62,7 @@ class Solution {
                 answer[count++] = point;
             }
         }
-        Arrays.sort(answer, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return (Math.abs(o1[0] - r0) + Math.abs(o1[1] - c0)) -
-                        (Math.abs(o2[0] - r0) + Math.abs(o2[1] - c0));
-            }
-        });
+        Arrays.sort(answer, Comparator.comparingInt(o -> (Math.abs(o[0] - r0) + Math.abs(o[1] - c0))));
         return answer;
     }
 
@@ -46,7 +70,7 @@ class Solution {
      * 给定一个以字符串表示的非负整数 num，移除这个数中的 k 位数字，使得剩下的数字最小
      * 单调栈+贪心解法
      */
-    public String removeKdigits(String num, int k) {
+    public String removeKDigits(String num, int k) {
         Deque<Character> stack = new ArrayDeque<>();
         for (char c: num.toCharArray()) {
             while (k != 0 && !stack.isEmpty() && stack.peek() > c) {
@@ -146,15 +170,6 @@ class Solution {
      * @return 任意一个重复数字
      */
     public int findRepeatNumber(int[] nums) {
-/*        Set<Integer> set = new HashSet<>();
-
-        for (int i: nums) {
-            if (!set.contains(i)) {
-                set.add(i);
-            }
-            else return i;
-        }
-        throw new RuntimeException();*/
         int temp;
         for (int i=0; i<nums.length; ++i) {
             while(nums[i] != i) {
@@ -302,17 +317,4 @@ class Solution {
         return arr;
     }
 
-    List<List<Integer>> answer = new ArrayList<>();
-
-    public List<List<Integer>> subsets(int[] nums) {
-        answer.add(new ArrayList<>());
-        //dfs(nums, 0);
-        return answer;
-    }
-
-    private void dfs(int[] nums, int i) {
-        answer.add(new ArrayList<Integer>(){{
-                add(1);
-        }});
-    }
 }
