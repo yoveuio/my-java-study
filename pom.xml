@@ -12,11 +12,10 @@
         <module>class</module>
         <module>thread-study</module>
         <module>algorithm</module>
-        <module>java-basic</module>
         <module>tomcat-study</module>
         <module>netty_study</module>
         <module>spring-study</module>
-        <module>my_web_study</module>
+        <module>web-study</module>
     </modules>
 
     <dependencies>
