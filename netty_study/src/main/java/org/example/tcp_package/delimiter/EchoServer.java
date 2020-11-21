@@ -1,4 +1,4 @@
-package org.example.tcp_package.echo;
+package org.example.tcp_package.delimiter;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -14,7 +14,6 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import org.example.tcp_package.TimeServer;
 
 import java.net.InetSocketAddress;
 

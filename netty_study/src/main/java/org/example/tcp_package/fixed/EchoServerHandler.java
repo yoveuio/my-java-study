@@ -1,8 +1,5 @@
-package org.example.tcp_package.echo;
+package org.example.tcp_package.fixed;
 
-
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -10,20 +7,14 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * @ClassName EchoServerHandler
  * @Description TODO
  * @Author yoveuio
- * @Date 2020/11/5 21:28
+ * @Date 2020/11/20 8:51
  * @Version 1.0
  */
-public class EchoServerHandler extends ChannelInboundHandlerAdapter{
-    int counter = 0;
+public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        String body = (String) msg;
-        System.out.println("This is " + ++counter + " times receive client : [" +
-                body + "]");
-        body += "$_";
-        ByteBuf echo = Unpooled.copiedBuffer(body.getBytes());
-        ctx.writeAndFlush(echo);
+        System.out.println("Receive client: [" + msg + "]");
     }
 
     @Override
