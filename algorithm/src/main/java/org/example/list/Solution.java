@@ -1,6 +1,7 @@
 package org.example.list;
 
 import org.example.leetcode.ListNode;
+import org.example.leetcode.Node;
 
 import java.util.*;
 
@@ -12,6 +13,92 @@ import java.util.*;
  * @Version 1.0
  */
 public class Solution {
+
+    /**
+     * 复杂链表的深拷贝
+     * 先复制每个节点，通过辅助线容易找到被复制对象的节点
+     */
+    public Node copyRandomList(Node head) {
+        if(head == null) return null;
+        Node cur = head;
+        // 1. 复制各节点，并构建拼接链表
+        while(cur != null) {
+            Node tmp = new Node(cur.val);
+            tmp.next = cur.next;
+            cur.next = tmp;
+            cur = tmp.next;
+        }
+        // 2. 构建各新节点的 random 指向
+        cur = head;
+        while(cur != null) {
+            if(cur.random != null)
+                cur.next.random = cur.random.next;
+            cur = cur.next.next;
+        }
+        // 3. 拆分两链表
+        cur = head.next;
+        Node pre = head, res = head.next;
+        while(cur.next != null) {
+            pre.next = pre.next.next;
+            cur.next = cur.next.next;
+            pre = pre.next;
+            cur = cur.next;
+        }
+        pre.next = null; // 单独处理原链表尾节点
+        return res;      // 返回新链表头节点
+    }
+
+    /**
+     * 快慢指针实现链表的归并排序
+     *
+     */
+    public ListNode sortList(ListNode head) {
+        return sortList(head, null);
+    }
+
+    public ListNode sortList(ListNode head, ListNode tail) {
+        if (head == null) {
+            return head;
+        }
+        if (head.next == tail) {
+            head.next = null;
+            return head;
+        }
+        ListNode slow = head, fast = head;
+        while (fast != tail) {
+            slow = slow.next;
+            fast = fast.next;
+            if (fast != tail) {
+                fast = fast.next;
+            }
+        }
+        ListNode mid = slow;
+        ListNode list1 = sortList(head, mid);
+        ListNode list2 = sortList(mid, tail);
+        ListNode sorted = merge(list1, list2);
+        return sorted;
+    }
+
+    public ListNode merge(ListNode head1, ListNode head2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode temp = dummyHead, temp1 = head1, temp2 = head2;
+        while (temp1 != null && temp2 != null) {
+            if (temp1.val <= temp2.val) {
+                temp.next = temp1;
+                temp1 = temp1.next;
+            } else {
+                temp.next = temp2;
+                temp2 = temp2.next;
+            }
+            temp = temp.next;
+        }
+        if (temp1 != null) {
+            temp.next = temp1;
+        } else if (temp2 != null) {
+            temp.next = temp2;
+        }
+        return dummyHead.next;
+    }
 
     /**
      * 奇偶链表，将一个链表的所有的奇节点排序在一起，偶节点排序在一起
