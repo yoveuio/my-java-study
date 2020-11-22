@@ -14,6 +14,25 @@ import java.util.List;
 public class Solution {
 
     /**
+     * 给定字符串s、t，判断t是否是s的字母异位词
+     */
+    public boolean isAnagram(String s, String t) {
+        if (s == null || t == null || s.length() != t.length()) return false;
+        int[] letterS = new int[26];
+        int[] letterT = new int[26];
+        final int a = 'a';
+        for (int i = 0; i < s.length(); i++) {
+            letterS[s.charAt(i) - a]++;
+            letterT[t.charAt(i) - a]++;
+        }
+
+        for (int i=0; i<26; i++) {
+            if (letterS[i] != letterT[i]) return false;
+        }
+        return true;
+    }
+
+    /**
      * 最长不含重复元素的子串
      */
     public int lengthOfLongestSubstring(String s) {

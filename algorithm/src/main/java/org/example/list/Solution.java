@@ -15,6 +15,26 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 链表中的倒数第k个节点
+     */
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        ListNode sentinel = new ListNode(-1);
+        sentinel.next = head;
+        ListNode prev = sentinel;
+        ListNode curr = head;
+        for (int i=0; i<k; i++) {
+            if (curr==null) return sentinel.next;
+            curr = curr.next;
+        }
+
+        while (curr != null) {
+            curr = curr.next;
+            prev = prev.next;
+        }
+        return prev.next;
+    }
+
+    /**
      * 复杂链表的深拷贝
      * 先复制每个节点，通过辅助线容易找到被复制对象的节点
      */

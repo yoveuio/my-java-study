@@ -1,8 +1,6 @@
 package org.example.nio;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * @ClassName TimeServer
@@ -50,34 +48,5 @@ public class TimeServer {
         MultiplexerTimeServer timeServer = new MultiplexerTimeServer(port);
 
         new Thread(timeServer, "NIO-MultiplexerTimeServer-001").start();
-        /*ServerSocket server = null;
-        try {
-            //建立套接字服务端
-            server = new ServerSocket(port);
-            System.out.println("The time server is start in port:"+port);
-            Socket socket = null;
-            //同步式模型
-            *//*
-            while(true) {
-                //等待客户端连接
-                socket = server.accept();
-                //创建线程处理套接字请求
-                new Thread(new TimeServerHandler(socket)).start();
-            }*//*
-            TimeServerHandlerExecutePool singleExecutor =
-                    new TimeServerHandlerExecutePool(50, 10000);
-            while(true) {
-                socket = server.accept();
-                singleExecutor.execute(new TimeServerHandler(socket));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (server != null) {
-                System.out.println("The time server close");
-                server.close();
-            }
-        }*/
     }
-
 }
