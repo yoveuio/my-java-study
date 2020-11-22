@@ -2,7 +2,6 @@ package org.example.string;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,6 +12,13 @@ import java.util.List;
  * @Version 1.0
  */
 public class Solution {
+
+    /**
+     * 最长不含重复元素的子串
+     */
+    public int lengthOfLongestSubstring(String s) {
+        return -1;
+    }
 
     /**
      * 将一个字符串尽可能的分割，保证每个字母只会出现在一个片段中
