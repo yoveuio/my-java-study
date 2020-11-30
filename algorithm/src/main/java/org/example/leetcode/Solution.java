@@ -12,9 +12,42 @@ import java.util.*;
 class Solution {
 
     public static void main(String[] args) {
-        Solution solution = new Solution();
+        /*Solution solution = new Solution();
         int i = solution.canCompleteCircuit(new int[]{3, 3, 4}, new int[]{3, 4, 4});
-        System.out.println(i);
+        System.out.println(i);*/
+    }
+
+    public int largestPerimeter(int[] A) {
+        //largestPerimeterHandler(A, 0, A.length-1);
+        Arrays.sort(A);
+        for (int i = A.length - 1; i >= 2; --i) {
+            if (A[i - 2] + A[i - 1] > A[i]) {
+                return A[i - 2] + A[i - 1] + A[i];
+            }
+        }
+        return 0;
+    }
+
+    private void largestPerimeterHandler(int[] a, int lo, int hi) {
+        if (lo >= hi) return;
+        int i = lo, j = hi+1;
+        int v = a[lo];
+        while (true) {
+            while (a[++i] > v && i < hi);
+            while (a[--j] < v && j > lo);
+            if (i >= j) break;
+            swap(a, i, j);
+        }
+        swap(a, lo, j);
+        largestPerimeterHandler(a, lo, j-1);
+        largestPerimeterHandler(a, j+1, hi);
+    }
+
+    private void swap(int[] a, int i, int j) {
+        if (i == j) return;
+        a[i] ^= a[j];
+        a[j] ^= a[i];
+        a[i] ^= a[j];
     }
 
     /**
