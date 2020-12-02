@@ -1,6 +1,5 @@
 package org.example.tree;
 
-import org.example.leetcode.ListNode;
 import org.example.leetcode.TreeNode;
 
 import java.util.*;
@@ -13,6 +12,70 @@ import java.util.*;
  * @Version 1.0
  */
 public class Solution {
+
+    /**
+     *
+     * @param root TreeNode类 the root of binary tree
+     * @return int整型二维数组
+     */
+    /**
+     *
+     * @param root TreeNode类 the root of binary tree
+     * @return int整型二维数组
+     */
+    public int[][] threeOrders (TreeNode root) {
+        // write code here
+        int[][] answers = new int[3][];
+        answers[0] = preorder(root);
+        answers[1] = inorder(root);
+        answers[2] = postorder(root);
+        return answers;
+    }
+
+    private int[] preorder(TreeNode root) {
+        List<Integer> answer = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            answer.add(node.val);
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
+        }
+        return answer.stream().mapToInt(Integer::valueOf).toArray();
+    }
+
+    private int[] postorder(TreeNode root) {
+        List<Integer> answer = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            answer.add(node.val);
+            if (node.left != null) stack.push(node.left);
+            if (node.right != null) stack.push(node.right);
+        }
+        Collections.reverse(answer);
+        return answer.stream().mapToInt(Integer::valueOf).toArray();
+    }
+
+    private int[] inorder(TreeNode root){
+        List<Integer> answer = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+
+        while (!stack.isEmpty() || root != null) {
+            while(root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            answer.add(root.val);
+            root = root.right;
+        }
+        return answer.stream().mapToInt(Integer::valueOf).toArray();
+    }
 
     /**
      * 前序后序确定二叉树
@@ -224,22 +287,4 @@ public class Solution {
         }
         return node;
     }
-/*    HashMap<Integer, Integer> dic = new HashMap<>();
-    int[] po;
-
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        po = preorder;
-        for (int i = 0; i < inorder.length; i++)
-            dic.put(inorder[i], i);
-        return recur(0, 0, inorder.length - 1);
-    }
-
-    TreeNode recur(int pre_root, int in_left, int in_right) {
-        if (in_left > in_right) return null;
-        TreeNode root = new TreeNode(po[pre_root]);
-        int i = dic.get(po[pre_root]);
-        root.left = recur(pre_root + 1, in_left, i - 1);
-        root.right = recur(pre_root + i - in_left + 1, i + 1, in_right);
-        return root;
-    }*/
 }
