@@ -1,4 +1,4 @@
-package org.example.leetcode.doublepointer;
+package org.example.doublepointer;
 
 import org.example.leetcode.ListNode;
 

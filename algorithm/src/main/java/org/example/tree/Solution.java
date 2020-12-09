@@ -1,5 +1,6 @@
 package org.example.tree;
 
+import org.example.leetcode.Node;
 import org.example.leetcode.TreeNode;
 
 import java.util.*;
@@ -13,17 +14,35 @@ import java.util.*;
  */
 public class Solution {
 
+    Node prev, head;
     /**
+     * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
      *
+     * @param root 树的根节点
+     * @return 返回最小的节点
+     */
+    public Node treeToDoublyList(Node root) {
+        treeToDoublyListHandler(root);
+        head.left = prev;
+        prev.right = head;
+        return head;
+    }
+
+    private void treeToDoublyListHandler(Node curr) {
+        if (curr == null) return ;
+        treeToDoublyListHandler(curr.left);
+        if (prev != null) prev.right = curr;
+        else head = curr;
+        curr.left = prev;
+        prev = curr;
+        treeToDoublyListHandler(curr.right);
+    }
+
+    /**
      * @param root TreeNode类 the root of binary tree
      * @return int整型二维数组
      */
-    /**
-     *
-     * @param root TreeNode类 the root of binary tree
-     * @return int整型二维数组
-     */
-    public int[][] threeOrders (TreeNode root) {
+    public int[][] threeOrders(TreeNode root) {
         // write code here
         int[][] answers = new int[3][];
         answers[0] = preorder(root);
@@ -61,12 +80,12 @@ public class Solution {
         return answer.stream().mapToInt(Integer::valueOf).toArray();
     }
 
-    private int[] inorder(TreeNode root){
+    private int[] inorder(TreeNode root) {
         List<Integer> answer = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
 
         while (!stack.isEmpty() || root != null) {
-            while(root != null) {
+            while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
@@ -81,6 +100,7 @@ public class Solution {
      * 前序后序确定二叉树
      */
     int[] pre, post;
+
     public TreeNode constructFromPrePost(int[] pre, int[] post) {
         this.pre = pre;
         this.post = post;
@@ -94,31 +114,31 @@ public class Solution {
 
         int L = 1;
         for (; L < N; ++L)
-            if (post[i1 + L-1] == pre[i0 + 1])
+            if (post[i1 + L - 1] == pre[i0 + 1])
                 break;
 
-        root.left = make(i0+1, i1, L);
-        root.right = make(i0+L+1, i1+L, N-1-L);
+        root.left = make(i0 + 1, i1, L);
+        root.right = make(i0 + L + 1, i1 + L, N - 1 - L);
         return root;
     }
 
     /**
      * 判断是不是树的后序遍历结果
-     *
+     * <p>
      * 后序链表的遍历结果的顺序是左右根，所有比最后一点小的数都是左节点，所有比最后一点大的数都是右子树节点、
      * 最后只需要通过分治验证右子树是否都比根节点大即可
-     *
+     * <p>
      * 单调栈解法
      * public boolean verifyPostorder(int[] postorder) {
-     *     Stack<Integer> stack = new Stack<>();
-     *     int root = Integer.MAX_VALUE;
-     *     for(int i = postorder.length - 1; i >= 0; i--) {
-     *         if(postorder[i] > root) return false;
-     *         while(!stack.isEmpty() && stack.peek() > postorder[i])
-     *             root = stack.pop();
-     *         stack.add(postorder[i]);
-     *     }
-     *     return true;
+     * Stack<Integer> stack = new Stack<>();
+     * int root = Integer.MAX_VALUE;
+     * for(int i = postorder.length - 1; i >= 0; i--) {
+     * if(postorder[i] > root) return false;
+     * while(!stack.isEmpty() && stack.peek() > postorder[i])
+     * root = stack.pop();
+     * stack.add(postorder[i]);
+     * }
+     * return true;
      * }
      */
     public boolean verifyPostorder(int[] postorder) {
@@ -127,16 +147,17 @@ public class Solution {
 
 
     boolean recur(int[] postorder, int i, int j) {
-        if(i >= j) return true;
+        if (i >= j) return true;
         int p = i;
-        while(postorder[p] < postorder[j]) p++;
+        while (postorder[p] < postorder[j]) p++;
         int m = p;
-        while(postorder[p] > postorder[j]) p++;
+        while (postorder[p] > postorder[j]) p++;
         return p == j && recur(postorder, i, m - 1) && recur(postorder, m, j - 1);
     }
 
     /**
      * 之字形打印二叉树
+     *
      * @param root 根节点
      */
     public List<List<Integer>> levelOrder3(TreeNode root) {
@@ -145,15 +166,15 @@ public class Solution {
 
         Queue<TreeNode> queue = new LinkedList<>();
         List<List<Integer>> res = new ArrayList<>();
-        if(root != null) queue.add(root);
-        while(!queue.isEmpty()) {
+        if (root != null) queue.add(root);
+        while (!queue.isEmpty()) {
             LinkedList<Integer> tmp = new LinkedList<>();
-            for(int i = queue.size(); i > 0; i--) {
+            for (int i = queue.size(); i > 0; i--) {
                 TreeNode node = queue.poll();
-                if(res.size() % 2 == 0) tmp.addLast(node.val); // 偶数层 -> 队列头部
+                if (res.size() % 2 == 0) tmp.addLast(node.val); // 偶数层 -> 队列头部
                 else tmp.addFirst(node.val); // 奇数层 -> 队列尾部
-                if(node.left != null) queue.add(node.left);
-                if(node.right != null) queue.add(node.right);
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
             }
             res.add(tmp);
         }
@@ -166,14 +187,14 @@ public class Solution {
     public List<List<Integer>> levelOrder2(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<>();
         List<List<Integer>> res = new ArrayList<>();
-        if(root != null) queue.add(root);
-        while(!queue.isEmpty()) {
+        if (root != null) queue.add(root);
+        while (!queue.isEmpty()) {
             List<Integer> tmp = new ArrayList<>();
-            for(int i = queue.size(); i > 0; i--) {
+            for (int i = queue.size(); i > 0; i--) {
                 TreeNode node = queue.poll();
                 tmp.add(node.val);
-                if(node.left != null) queue.add(node.left);
-                if(node.right != null) queue.add(node.right);
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
             }
             res.add(tmp);
         }
@@ -182,6 +203,7 @@ public class Solution {
 
     /**
      * 层次打印二叉树
+     *
      * @return
      */
     public int[] levelOrder(TreeNode root) {
@@ -201,7 +223,7 @@ public class Solution {
             }
         }
         answer = new int[answerList.size()];
-        for (int i = 0; i<answerList.size(); ++i) {
+        for (int i = 0; i < answerList.size(); ++i) {
             answer[i] = answerList.get(i);
         }
         return answer;
@@ -223,6 +245,7 @@ public class Solution {
 
     /**
      * 镜像二叉树，将左右子树替换
+     *
      * @param root 根节点
      * @return 返回镜像二叉树
      */
@@ -233,10 +256,11 @@ public class Solution {
         root.left = temp;
         return root;
     }
+
     /**
      * 判断B树是不是A树的子结构
-     *  isSubStructure用来遍历A树，来找到一个头节点和B树开始匹配
-     *  isSubStructureHandler用来判断A、B俩树是否相同，如果A有一颗子树和B相同，就为true
+     * isSubStructure用来遍历A树，来找到一个头节点和B树开始匹配
+     * isSubStructureHandler用来判断A、B俩树是否相同，如果A有一颗子树和B相同，就为true
      */
     public boolean isSubStructure(TreeNode A, TreeNode B) {
         if (B == null || A == null) return false;

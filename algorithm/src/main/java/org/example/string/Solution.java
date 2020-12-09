@@ -14,6 +14,15 @@ import java.util.List;
 public class Solution {
 
     /**
+     * 打印出字符串中字符所有的排列
+     * @param s 给定字符串
+     * @return 任意顺序的一个排列
+     */
+    public String[] permutation(String s) {
+        return null;
+    }
+
+    /**
      * 给定字符串s、t，判断t是否是s的字母异位词
      */
     public boolean isAnagram(String s, String t) {

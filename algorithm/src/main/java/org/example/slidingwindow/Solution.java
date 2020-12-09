@@ -1,4 +1,4 @@
-package org.example.leetcode.slidingwindow;
+package org.example.slidingwindow;
 
 /**
  * @ClassName Solution

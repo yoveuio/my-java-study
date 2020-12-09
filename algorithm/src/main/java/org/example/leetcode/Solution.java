@@ -17,6 +17,28 @@ class Solution {
         System.out.println(i);*/
     }
 
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> answers = new ArrayList<>();
+        List<Integer> answer, prev;
+        if (numRows == 0) return answers;
+
+        answer = new ArrayList<>();
+        answer.add(1);
+        answers.add(answer);
+        for (int i = 1; i < numRows; i++) {
+            answer = new ArrayList<>();
+            prev = answers.get(i - 1);
+            answer.add(1);
+
+            for (int j = 0; j < prev.size() - 1; j++){
+                answer.add(prev.get(j) + prev.get(j + 1));
+            }
+            answer.add(1);
+            answers.add(answer);
+        }
+        return answers;
+    }
+
     public int largestPerimeter(int[] A) {
         //largestPerimeterHandler(A, 0, A.length-1);
         Arrays.sort(A);

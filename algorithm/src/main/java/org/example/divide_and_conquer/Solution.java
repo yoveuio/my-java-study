@@ -1,4 +1,4 @@
-package org.example.leetcode.divide_and_conquer;
+package org.example.divide_and_conquer;
 
 import org.example.leetcode.ListNode;
 

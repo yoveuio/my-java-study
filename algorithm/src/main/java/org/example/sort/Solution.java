@@ -13,6 +13,7 @@ public class Solution {
 
     /**
      * 快排思想找到TopK
+     * 最大的k个数
      */
     public int[] getLeastNumbers(int[] arr, int k) {
         if (k == 0 || arr.length == 0) {
