@@ -12,6 +12,95 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 剑指51 逆序数组
+     * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+     * @param nums 一个数组，数组长度：0-50000
+     * @return 逆序对的数量
+     */
+    int[] aux;
+    public int reversePairs(int[] nums) {
+        if (nums.length < 2) return 0;
+        aux = new int[nums.length];
+        return reversePairsHandler(nums, 0, nums.length-1);
+    }
+
+    private int reversePairsHandler(int[] nums, int lo, int hi) {
+        if (lo >= hi) return 0;
+        int mid = (hi - lo >> 1) + lo;
+        int count = 0;
+        //左边的逆序对数量
+        count += reversePairsHandler(nums, lo, mid);
+        //右边的逆序对数量
+        count += reversePairsHandler(nums, mid + 1, hi);
+        //两个区间中间的逆序对数量
+        return merge(nums, lo, hi, mid) + count;
+    }
+
+    private int merge(int[] nums, int lo, int hi, int mid) {
+        int i = lo, j = mid + 1;
+        if (hi + 1 - lo >= 0) System.arraycopy(nums, lo, aux, lo, hi + 1 - lo);
+        int count = 0;
+
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid) {
+                nums[k] = aux[j++];
+            }
+            else if (j > hi) {
+                nums[k] = aux[i++];
+            }
+            else if (aux[i] <= aux[j]) {
+                nums[k] = aux[i++];
+            }
+            else {
+                count += mid + 1 - i;
+                nums[k] = aux[j++];
+            }
+        }
+        return count;
+    }
+
+    /**
+     * LC376. 摆动序列
+     * 如果连续数字之间的差严格地在正数和负数之间交替，则数字序列称为摆动序列。第一个差（如果存在的话）可能是正数或负数。
+     * 少于两个元素的序列也是摆动序列。
+     *
+     *  背包解法
+     * public int wiggleMaxLength(int[] nums) {
+     *     int n = nums.length;
+     *     if (n < 2) {
+     *         return n;
+     *     }
+     *     int up = 1, down = 1;
+     *     for (int i = 1; i < n; i++) {
+     *         if (nums[i] > nums[i - 1]) {
+     *             up = Math.max(up, down + 1);
+     *         } else if (nums[i] < nums[i - 1]) {
+     *             down = Math.max(up + 1, down);
+     *         }
+     *     }
+     *     return Math.max(up, down);
+     * }
+     * @param nums 一个数组
+     * @return 返回是摆动数组的最长子序列的长度
+     */
+    public int wiggleMaxLength(int[] nums) {
+        int n = nums.length;
+        if (n < 2) {
+            return n;
+        }
+        int prevdiff = nums[1] - nums[0];
+        int ret = prevdiff != 0 ? 2 : 1;
+        for (int i = 2; i < n; i++) {
+            int diff = nums[i] - nums[i - 1];
+            if ((diff > 0 && prevdiff <= 0) || (diff < 0 && prevdiff >= 0)) {
+                ret++;
+                prevdiff = diff;
+            }
+        }
+        return ret;
+    }
+
+    /**
      * 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
      *  Map解法：
      *         Map<Integer, Integer> map = new HashMap<>();
