@@ -12,6 +12,32 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+     *  Map解法：
+     *         Map<Integer, Integer> map = new HashMap<>();
+     *         for (int num: nums) {
+     *             map.put(num, map.getOrDefault(num, 0) + 1);
+     *         }
+     *         for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+     *             if (entry.getValue() > nums.length >> 1) {
+     *                 return entry.getKey();
+     *             }
+     *         }
+     *         throw new IllegalArgumentException();
+     * @param nums 查找的数组
+     * @return 超过数组长度一半的数字
+     */
+    public int majorityElement(int[] nums) {
+        //求众数: 摩尔投票法
+        int target = nums[0], count = 0;
+        for (int num: nums) {
+            if (count == 0) target = num;
+            count += target == num ? 1 : -1;
+        }
+        return target;
+    }
+
+    /**
      * 根据身高排列数组
      */
     public int[][] reconstructQueue(int[][] people) {

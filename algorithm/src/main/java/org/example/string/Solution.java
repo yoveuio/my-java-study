@@ -1,8 +1,8 @@
 package org.example.string;
 
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * @ClassName Solution
@@ -13,13 +13,61 @@ import java.util.List;
  */
 public class Solution {
 
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        solution.permutation("abc");
+    }
+
     /**
-     * 打印出字符串中字符所有的排列
+     * 找到第一个只出现一次的数
+     * @param s 一个包含很多字符的数
+     * @return 第一个只出现一次的字符
+     */
+    public char firstUniqChar(String s) {
+        Map<Character, Integer> answer = new HashMap<>();
+        for (char c: s.toCharArray()) {
+            answer.put(c, answer.getOrDefault(c, 0) + 1);
+        }
+
+        for (char c: s.toCharArray()) {
+            if (answer.get(c) == 1) {
+                return c;
+            }
+        }
+        return ' ';
+    }
+
+    /**
+     * 打印出字符串中字符所有的排列，不能有重复元素
      * @param s 给定字符串
      * @return 任意顺序的一个排列
      */
+    List<String> answer = new LinkedList<>();
+    HashMap<Character, Integer> mapS = new HashMap<>();
     public String[] permutation(String s) {
-        return null;
+        for (char c: s.toCharArray()) {
+            mapS.put(c, mapS.getOrDefault(c, 0) + 1);
+        }
+        permutationHandler("", s.length());
+        return answer.toArray(new String[answer.size()]);
+    }
+
+    private void permutationHandler(String s, int size) {
+        if (s.length() == size) {
+            answer.add(s);
+            return;
+        }
+        StringBuilder stringBuilder = new StringBuilder(s);
+        Set<Character> characters = mapS.keySet();
+        for (char c: characters) {
+            int count = mapS.get(c);
+            if (count <= 0) continue;
+            mapS.put(c, count-1);
+            stringBuilder.append(c);
+            permutationHandler(stringBuilder.toString(), size);
+            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+            mapS.put(c, count);
+        }
     }
 
     /**

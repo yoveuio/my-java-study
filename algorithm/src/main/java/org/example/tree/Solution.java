@@ -14,6 +14,71 @@ import java.util.*;
  */
 public class Solution {
 
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        solution.verifyPostorder(new int[]{4, 6, 7, 5});
+    }
+
+    /**
+     * 剑指offer 34. 二叉树中和为某一值的路径
+     * 输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径
+     * https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/
+     * @param root 根节点
+     * @param sum 目标值
+     * @return 返回所有满足条件的路径
+     */
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        answers = new LinkedList<>();
+        path = new LinkedList<>();
+        pathSumHandler(root, sum, 0, 0);
+        return answers;
+    }
+
+    List<Integer> path;
+    List<List<Integer>> answers;
+
+    private void pathSumHandler(TreeNode node, int sum, int value, int index) {
+        if (node == null) return;
+        if (isLeaf(node)) {
+            if (value+node.val == sum) {
+                List<Integer> answer = new ArrayList<>(path);
+                answer.add(node.val);
+                answers.add(answer);
+            }
+            return;
+        }
+
+        path.add(node.val);
+        pathSumHandler(node.left, sum, value+node.val, index+1);
+        pathSumHandler(node.right, sum, value+ node.val, index+1);
+        path.remove(index);
+    }
+
+    private boolean isLeaf(TreeNode node) {
+        return node.left == null && node.right == null;
+    }
+
+
+    /**
+     * 判断一个序列是否是一颗树的后序序列
+     * @param postorder 一个序列
+     * @return 如果是一棵树的后序遍历序列返回true，否则返回false
+     */
+    public boolean verifyPostorder(int[] postorder) {
+        return verifyPostorderHandler(postorder, 0, postorder.length-1);
+    }
+
+    private boolean verifyPostorderHandler(int[] postorder, int start, int root) {
+        if (start >= root) return true;
+        int i = start - 1;
+        int v = postorder[root];
+        while (++i < v && postorder[i] < v);
+        int j = i;
+        while (++i < v && postorder[i] > v);
+        return i >= root && verifyPostorderHandler(postorder, start, j - 1) && verifyPostorderHandler(postorder
+                , j, root - 1);
+    }
+
     Node prev, head;
     /**
      * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
@@ -122,38 +187,6 @@ public class Solution {
         return root;
     }
 
-    /**
-     * 判断是不是树的后序遍历结果
-     * <p>
-     * 后序链表的遍历结果的顺序是左右根，所有比最后一点小的数都是左节点，所有比最后一点大的数都是右子树节点、
-     * 最后只需要通过分治验证右子树是否都比根节点大即可
-     * <p>
-     * 单调栈解法
-     * public boolean verifyPostorder(int[] postorder) {
-     * Stack<Integer> stack = new Stack<>();
-     * int root = Integer.MAX_VALUE;
-     * for(int i = postorder.length - 1; i >= 0; i--) {
-     * if(postorder[i] > root) return false;
-     * while(!stack.isEmpty() && stack.peek() > postorder[i])
-     * root = stack.pop();
-     * stack.add(postorder[i]);
-     * }
-     * return true;
-     * }
-     */
-    public boolean verifyPostorder(int[] postorder) {
-        return recur(postorder, 0, postorder.length - 1);
-    }
-
-
-    boolean recur(int[] postorder, int i, int j) {
-        if (i >= j) return true;
-        int p = i;
-        while (postorder[p] < postorder[j]) p++;
-        int m = p;
-        while (postorder[p] > postorder[j]) p++;
-        return p == j && recur(postorder, i, m - 1) && recur(postorder, m, j - 1);
-    }
 
     /**
      * 之字形打印二叉树
