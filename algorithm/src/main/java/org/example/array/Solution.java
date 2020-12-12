@@ -17,12 +17,12 @@ public class Solution {
      * @param nums 一个数组，数组长度：0-50000
      * @return 逆序对的数量
      */
-    int[] aux;
     public int reversePairs(int[] nums) {
         if (nums.length < 2) return 0;
         aux = new int[nums.length];
         return reversePairsHandler(nums, 0, nums.length-1);
     }
+    int[] aux;
 
     private int reversePairsHandler(int[] nums, int lo, int hi) {
         if (lo >= hi) return 0;
