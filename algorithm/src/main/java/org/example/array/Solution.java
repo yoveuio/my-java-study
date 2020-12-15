@@ -12,6 +12,38 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 和为target的两个数字
+     */
+    public int[] twoSum(int[] nums, int target) {
+        int l = 0, r = nums.length - 1;
+        while (l <= r) {
+            int sum = nums[l] + nums[r];
+            if (sum == target) {
+                return new int[]{nums[l], nums[r]};
+            }
+            else if (sum < target) {
+                l++;
+            }
+            else {
+                r--;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * 判断是否有重复元素
+     */
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num: nums) {
+            if (set.contains(num)) return true;
+            set.add(num);
+        }
+        return false;
+    }
+
+    /**
      * 剑指51 逆序数组
      * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
      * @param nums 一个数组，数组长度：0-50000

@@ -19,6 +19,38 @@ public class Solution {
     }
 
     /**
+     * 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+     * 计数排序
+     * @param strs 一个字符串数组，里面有0~n个字母异位词
+     * @return 返回字母异位词分组后的结果
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> answers = new ArrayList<>();
+        Map<String, List<String>> map = new HashMap<>();
+        for (String s: strs) {
+            int[] counts = new int[26];
+            for (char ch: s.toCharArray()) {
+                counts[ch - 'a']++;
+            }
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 26; i++) {
+                if (counts[i] != 0) {
+                    sb.append((char)(i + 'a'));
+                    sb.append(counts[i]);
+                }
+            }
+            List<String> answer = map.getOrDefault(sb.toString(), new ArrayList<>());
+            answer.add(s);
+            map.put(sb.toString(), answer);
+        }
+
+        for (Map.Entry<String, List<String>> entry: map.entrySet()) {
+            answers.add(entry.getValue());
+        }
+        return answers;
+    }
+
+    /**
      * 找到第一个只出现一次的数
      * @param s 一个包含很多字符的数
      * @return 第一个只出现一次的字符

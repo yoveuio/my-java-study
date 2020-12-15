@@ -20,6 +20,14 @@ public class Solution {
     }
 
     /**
+     * 剑指55 二叉树的深度
+     */
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+
+    /**
      * 剑指offer 34. 二叉树中和为某一值的路径
      * 输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径
      * https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/
