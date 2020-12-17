@@ -19,6 +19,33 @@ public class Solution {
     }
 
     /**
+     * 给定一种规律 pattern和一个字符串str，判断 str 是否遵循相同的规律。
+     * 这里的遵循指完全匹配，例如，pattern里的每个字母和字符串str中的每个非空单词之间存在着双向连接的对应规律。
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/word-pattern
+     * @param pattern 匹配模式
+     * @param s 字符串
+     * @return 返回字符串是否匹配模式
+     */
+    public boolean wordPattern(String pattern, String s) {
+        String[] strings = s.split(" ");
+        Map<Character, String> charMap = new HashMap<>();
+        Map<String, Character> stringMap = new HashMap<>();
+        if (strings.length < pattern.length()) return false;
+        for (int i = 0; i < strings.length; i++) {
+            String s1 = strings[i];
+            char c = pattern.charAt(i);
+            if ((charMap.containsKey(c) && !Objects.equals(charMap.get(c), s1)) ||
+                    (stringMap.containsKey(s1) && stringMap.get(s1) != c)) {
+                return false;
+            }
+            charMap.put(c, s1);
+            stringMap.put(s1, c);
+        }
+        return true;
+    }
+
+    /**
      * 给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
      * 计数排序
      * @param strs 一个字符串数组，里面有0~n个字母异位词

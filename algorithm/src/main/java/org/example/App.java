@@ -10,7 +10,6 @@ public class App {
         App app = new App();
 //        int solve = app.solve(2, 1, 1000000000);
 //        System.out.println(solve);
-        System.out.println(app.string2(10,"acesxd"));
     }
 
     /**

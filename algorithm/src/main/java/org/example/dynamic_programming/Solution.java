@@ -9,6 +9,32 @@ package org.example.dynamic_programming;
  */
 public class Solution {
 
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int num = solution.translateNum(624);
+        System.out.println(num);
+    }
+
+    /**
+     * 斐波那契
+     */
+    public int translateNum(int num) {
+        char[] chs = String.valueOf(num).toCharArray();
+        int len = chs.length;
+        if (chs.length <= 1) return 1;
+        int[] dp = new int[chs.length];
+        dp[0] = 1;
+        dp[1] = twoNumberIsLetter(chs[0], chs[1]) ? 2 : 1;
+        for (int i = 2; i < len; i++) {
+            dp[i] = dp[i - 1] + (twoNumberIsLetter(chs[i - 1], chs[i]) ? dp[i - 2] : 0);
+        }
+        return dp[len - 1];
+    }
+
+    private boolean twoNumberIsLetter(char c1, char c2) {
+        return c1 != '0' && (c1 - '0') * 10 + (c2 - '0') < 26 && (c1 - '0') * 10 + (c2 - '0') >= 0;
+    }
+
     /**
      * 最长上升子序列
      * 动态规划：

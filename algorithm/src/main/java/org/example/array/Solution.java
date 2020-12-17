@@ -12,6 +12,37 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
+     * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof
+     * @param target 目标值
+     * @return 返回所有符合要求的连续子序列
+     */
+    public int[][] findContinuousSequence(int target) {
+        int l = 1, r = 2;
+        List<int[]> answers = new ArrayList<>();
+        while (l < r) {
+            int sum = (l + r) * (r - l + 1) >> 1;
+            if (sum == target) {
+                int[] answer = new int[r - l + 1];
+                for(int i = 0; i < r - l + 1; i++) {
+                    answer[i] = l + i;
+                }
+                answers.add(answer);
+                l++;
+            }
+            else if (sum < target) {
+                r++;
+            }
+            else {
+                l++;
+            }
+        }
+        return answers.toArray(new int[answers.size()][]);
+    }
+
+    /**
      * 和为target的两个数字
      */
     public int[] twoSum(int[] nums, int target) {
