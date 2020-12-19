@@ -10,6 +10,20 @@ package org.example.dichotomize;
 public class Solution {
 
     /**
+     * 剑指 Offer 53 - I. 在排序数组中查找数字 I
+     * 统计一个数字在排序数组中出现的次数。
+     * https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search(int[] nums, int target) {
+        
+
+        return 0;
+    }
+
+    /**
      * @param nums 排序数组
      * @param target 目标值
      * @return 目标值的上界和下界, int[min][max]

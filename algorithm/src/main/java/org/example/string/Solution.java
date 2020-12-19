@@ -19,6 +19,56 @@ public class Solution {
     }
 
     /**
+     * LC389. 找不同
+     * 给定两个字符串 s 和 t，它们只包含小写字母。
+     * 字符串 t 由字符串 s 随机重排，然后在随机位置添加一个字母。
+     * 请找出在 t 中被添加的字母。
+     *
+     * https://leetcode-cn.com/problems/find-the-difference/submissions/
+     * @param s
+     * @param t
+     * @return
+     */
+    public char findTheDifference(String s, String t) {
+        int res = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            res ^= s.charAt(i);
+            res ^= t.charAt(i);
+        }
+        return (char) (res ^ t.charAt(s.length()));
+    }
+
+    /**
+     * 剑指 Offer 58 - I. 翻转单词顺序
+     * 输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。为简单起见，标点符号和普通字母一样处理。
+     * 例如输入字符串"I am a student. "，则输出"student. a am I"。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof
+     * @param s
+     * @return
+     */
+    public String reverseWords(String s) {
+        s = s.trim(); // 删除首尾空格
+        int j = s.length() - 1, i = j;
+        StringBuilder res = new StringBuilder();
+        while(i >= 0) {
+            while(i >= 0 && s.charAt(i) != ' ') i--; // 搜索首个空格
+            res.append(s, i + 1, j + 1).append(" "); // 添加单词
+            while(i >= 0 && s.charAt(i) == ' ') i--; // 跳过单词间空格
+            j = i; // j 指向下个单词的尾字符
+        }
+        return res.toString().trim(); // 转化为字符串并返回
+    };
+
+    private void swap(String[] s, int i, int j) {
+        String temp = s[i];
+        s[j] = s[i];
+        s[i] = temp;
+    }
+
+    /**
      * 给定一种规律 pattern和一个字符串str，判断 str 是否遵循相同的规律。
      * 这里的遵循指完全匹配，例如，pattern里的每个字母和字符串str中的每个非空单词之间存在着双向连接的对应规律。
      * 来源：力扣（LeetCode）

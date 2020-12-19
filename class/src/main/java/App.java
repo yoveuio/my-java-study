@@ -8,10 +8,22 @@
  * @date 2020/12/10 10:45
  */
 public class App {
-    static class TestA extends Thread implements Runnable {
-        @Override
-        public void run() {
-            super.run();
+    static class Test{
+        public static void main(String[] args) {
+            Father hello = new Father() {
+                @Override
+                public void show() {
+                    System.out.println("hello world");
+                }
+            };
+
+            Object obj = hello;
+        }
+    }
+
+    static class Father{
+        public void show() {
+            System.out.println("hello father");
         }
     }
 }
