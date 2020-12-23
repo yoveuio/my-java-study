@@ -19,6 +19,28 @@ public class Solution {
     }
 
     /**
+     * 剑指 Offer 48. 最长不含重复字符的子字符串
+     * @param s 字符串
+     * @return 返回最长子串的长度
+     */
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> dic = new HashMap<>();
+        int i = -1, res = 0;
+        for(int j = 0; j < s.length(); j++) {
+            if(dic.containsKey(s.charAt(j)))
+                i = Math.max(i, dic.get(s.charAt(j))); // 更新左指针 i
+            dic.put(s.charAt(j), j); // 哈希表记录
+            res = Math.max(res, j - i); // 更新结果
+        }
+        return res;
+    }
+
+    public String reverseLeftWords(String s, int n) {
+        if (s == null || n < 0 || s.length() < n) return s;
+        return s.substring(n) + s.substring(0, n);
+    }
+
+    /**
      * LC389. 找不同
      * 给定两个字符串 s 和 t，它们只包含小写字母。
      * 字符串 t 由字符串 s 随机重排，然后在随机位置添加一个字母。
@@ -196,13 +218,6 @@ public class Solution {
             if (letterS[i] != letterT[i]) return false;
         }
         return true;
-    }
-
-    /**
-     * 最长不含重复元素的子串
-     */
-    public int lengthOfLongestSubstring(String s) {
-        return -1;
     }
 
     /**

@@ -18,8 +18,7 @@ public class Solution {
         Solution solution = new Solution();
         solution.verifyPostorder(new int[]{4, 6, 7, 5});
     }
-
-
+    
 
     /**
      * 监控二叉树

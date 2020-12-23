@@ -6,12 +6,6 @@ import java.util.HashMap;
  * Hello world!
  */
 public class App {
-    public static void main(String[] args) {
-        App app = new App();
-//        int solve = app.solve(2, 1, 1000000000);
-//        System.out.println(solve);
-    }
-
     /**
      * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
      * 返回满足条件的最大的x。

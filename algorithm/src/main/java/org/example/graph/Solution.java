@@ -13,6 +13,26 @@ import java.util.Queue;
 public class Solution {
 
     /**
+     * LC48 旋转图像
+     * 将图像顺时针旋转 90 度。
+     * 说明：
+     *  你必须在原地旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要使用另一个矩阵来旋转图像。
+     * 链接：https://leetcode-cn.com/problems/rotate-image/
+     */
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n / 2; ++i) {
+            for (int j = 0; j < (n + 1) / 2; ++j) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = temp;
+            }
+        }
+    }
+
+    /**
      * 剑指 Offer 47. 礼物的最大价值
      * 在一个 m*n 的棋盘的每一格都放有一个礼物，每个礼物都有一定的价值（价值大于 0）。
      * 你可以从棋盘的左上角开始拿格子里的礼物，并每次向右或者向下移动一格、直到到达棋盘的右下角。
