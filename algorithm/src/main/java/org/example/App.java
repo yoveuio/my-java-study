@@ -6,6 +6,23 @@ import java.util.HashMap;
  * Hello world!
  */
 public class App {
+
+    public static void main(String[] args) {
+        App app = new App();
+        int i = app.cutBar(20, 3);
+        System.out.println(i);
+    }
+
+    public int cutBar(int n, int m) {
+        int slices = 1;
+        int cnt = 0;
+        while (slices < n) {
+            ++cnt;
+            slices += Math.min(slices, m);
+        }
+        return cnt;
+    }
+
     /**
      * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
      * 返回满足条件的最大的x。
@@ -17,23 +34,23 @@ public class App {
      */
     public int solve(int a, int b, int n) {
         // write code here
-        for(int i=n; i>=0; i--) {
-            if (i % a  == b) {
+        for (int i = n; i >= 0; i--) {
+            if (i % a == b) {
                 return i;
             }
         }
         return -1;
     }
 
-    public int string2 (int k, String s) {
+    public int string2(int k, String s) {
         HashMap<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < s.length();) {
+        for (int i = 0; i < s.length(); ) {
             char v = s.charAt(i);
-            while (++i < s.length() && s.charAt(i) == v);
+            while (++i < s.length() && s.charAt(i) == v) ;
             map.put(v, map.getOrDefault(v, 0) + 1);
         }
         int max = 0;
-        for (char i='a'; i<='z'; i++) {
+        for (char i = 'a'; i <= 'z'; i++) {
             Integer integer = map.getOrDefault(i, 0);
 
             max = Math.max(max, integer);
