@@ -1,4 +1,4 @@
-package org.example.designPatterns;
+package org.example.designPatterns.structure_model.facade;
 
 /**
  * @ClassName FacadeTest
