@@ -1,5 +1,7 @@
 package org.example.monotonic_stack;
 
+import java.util.Arrays;
+
 /**
  * @author yoveuio
  * @version 1.0
@@ -14,6 +16,8 @@ public class Solution {
         for (int i = 0; i < s.length(); i++) {
             num[s.charAt(i) - 'a']++;
         }
+
+        Arrays.sort(num);
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
