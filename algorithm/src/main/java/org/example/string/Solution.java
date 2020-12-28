@@ -18,6 +18,39 @@ public class Solution {
     }
 
     /**
+     * LC205. 同构字符串
+     * 给定两个字符串s和t，判断它们是否是同构的。
+     *
+     * 如果s中的字符可以被替换得到t，那么这两个字符串是同构的。
+     *
+     * 所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/isomorphic-strings
+     * @return 返回s和t是否重构
+     */
+    public boolean isIsomorphic(String s, String t) {
+        if (s.length() != t.length()) return false;
+        int n = s.length();
+        Map<Character, Character> map = new HashMap<>();
+        Set<Character> set = new HashSet<>();
+
+        for (int i = 0; i < n; i++) {
+            char ct = t.charAt(i), cs = s.charAt(i);
+            if (!map.containsKey(ct)) {
+                map.put(ct, cs);
+                if (set.contains(cs)) return false;
+                set.add(cs);
+                continue;
+            }
+            if (map.get(ct) != cs) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * 剑指 Offer 48. 最长不含重复字符的子字符串
      *
      * @param s 字符串

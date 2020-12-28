@@ -1,5 +1,8 @@
 package org.example.slidingwindow;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * @ClassName Solution
  * @Description TODO
@@ -11,8 +14,46 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        String s = solution.minWindow("ADOBECODEBANC", "ABC");
-        System.out.println(s);
+        int[] ints = solution.maxSlidingWindow(new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3);
+        System.out.println(ints);
+    }
+
+
+
+    /**
+     * 剑指 Offer 59 - I. 滑动窗口的最大值
+     * 给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。
+     * @param nums 数组
+     * @param k 目标值
+     * @return 返回每个滑动窗口的最大值
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums == null || nums.length < k) return new int[]{};
+        int n = nums.length;
+        int[] answer = new int[n - k + 1];
+        Deque<Integer> deque = new ArrayDeque<>();
+
+        int prev = 0;
+        for (int i = 0; i < n; i++) {
+            if (i < k) {
+                putMaxToRangeQueue(deque, nums[i]);
+                continue;
+            }
+            answer[prev] = deque.getFirst();
+            if (deque.getFirst() == nums[prev++]) {
+                deque.pollFirst();
+            }
+            putMaxToRangeQueue(deque, nums[i]);
+        }
+        answer[n - k] = deque.getFirst();
+        return answer;
+    }
+
+    private <T extends Comparable<T>>void putMaxToRangeQueue(Deque<T> deque, T num){
+        while (!deque.isEmpty() && deque.getLast().compareTo(num) < 0) {
+            deque.pollLast();
+        }
+        deque.offerLast(num);
     }
 
     /**
