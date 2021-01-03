@@ -9,6 +9,45 @@ package org.example.greedy;
  */
 public class Solution {
 
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int i = solution.minPatches(new int[]{1, 3}, 6);
+        System.out.println(i);
+    }
+    /* ------------------------------------------------------------------------------------------ */
+
+    /**
+     * LC330. 按要求补齐数组
+     * 给定一个已排序的正整数数组 nums，和一个正整数n。
+     * 从[1, n]区间内选取任意个数字补充到nums中，使得[1, n]区间内的任何数字都可以用nums中某几个数字的和来表示。
+     * 请输出满足上述要求的最少需要补充的数字个数。
+     *
+     * 基本思路：
+     *      对于x，如果[0, x-1]中的数组全部被覆盖，且x也在数组中，那么[0, 2x - 1]也全部被覆盖
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/patching-array
+     * @param nums 已排序的正整数数组
+     * @param n 正整数
+     * @return 返回最少补充的数字个数
+     */
+    public int minPatches(int[] nums, int n) {
+        int patches = 0;
+        long x = 1;
+        int length = nums.length, index = 0;
+        while (x <= n) {
+            if (index < length && nums[index] <= x) {
+                x += nums[index];
+                index++;
+            } else {
+                x *= 2;
+                patches++;
+            }
+        }
+        return patches;
+    }
+
+
     public int myCandy(int[] ratings) {
         int n = ratings.length;
         int inc = 1, dec = 0, rec = 1, top = 1;

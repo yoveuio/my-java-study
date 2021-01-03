@@ -25,26 +25,59 @@ public class Solution {
     }
 
     /**
+     * LC142. 环形链表 II
+     * 给定一个链表，返回链表开始入环的第一个节点。如果链表无环，则返回null。
+     * 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
+     * 说明：不允许修改给定的链表。
+     *
+     * 设起点为a，相遇点为b，入环的点为c，其中x = ac, y = ab， z = bc
+     * 两个快慢指针会在第一个圈相遇，这时slow的路程为y, fast的路程为2y
+     * 那么fast走过的环的距离为2y - y = y
+     * 因此从相遇点道起始点也就是x的距离
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/linked-list-cycle-ii
+     */
+    public ListNode detectCycle(ListNode head) {
+        if (head == null) return null;
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (fast == slow) {
+                ListNode ptr = head;
+                while (ptr != slow) {
+                    ptr = ptr.next;
+                    slow = slow.next;
+                }
+                return ptr;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
-     * public void moveZeroes(int[] nums) { 
-     *     int n = nums.length, left = 0, right = 0;
-     *     while (right < n) {
-     *         if (nums[right] != 0) {
-     *             swap(nums, left, right);
-     *             left++;
-     *         }
-     *         right++;
-     *     }
+     * public void moveZeroes(int[] nums) {
+     * int n = nums.length, left = 0, right = 0;
+     * while (right < n) {
+     * if (nums[right] != 0) {
+     * swap(nums, left, right);
+     * left++;
      * }
+     * right++;
+     * }
+     * }
+     *
      * @param nums
      */
     public void moveZeroes(int[] nums) {
         int zero = 0, notZero = 0;
         int len = nums.length;
         while (true) {
-            while (nums[notZero] != 0 && notZero <= len-1) notZero++;
+            while (nums[notZero] != 0 && notZero <= len - 1) notZero++;
             zero = notZero + 1;
-            while (zero <= len-1 && nums[zero] == 0) zero++;
+            while (zero <= len - 1 && nums[zero] == 0) zero++;
             if (zero == len) break;
             swap(nums, zero, notZero);
         }
@@ -56,14 +89,14 @@ public class Solution {
         ListNode pos = sentinel;
         ListNode point;
 
-        while(pos.next!=null) {
-            if (pos.next.val==x) {
+        while (pos.next != null) {
+            if (pos.next.val == x) {
                 break;
             }
             pos = pos.next;
         }
 
-        if (pos.next==null) return head;
+        if (pos.next == null) return head;
         point = pos.next.next;
         while (point != null) {
             if (point.val < x) {
@@ -72,8 +105,7 @@ public class Solution {
                 node.next = pos.next;
                 pos.next = node;
                 pos = node;
-            }
-            else {
+            } else {
                 point = point.next;
             }
         }
@@ -113,7 +145,8 @@ public class Solution {
 
     /**
      * 通过双指针判断是否链表有环：
-     *  两个指针同时遍历，如果速度快的指针与速度慢的指针碰撞了，说明有环
+     * 两个指针同时遍历，如果速度快的指针与速度慢的指针碰撞了，说明有环
+     *
      * @param head 链表头节点
      * @return 有环返回false
      */
@@ -123,7 +156,7 @@ public class Solution {
         ListNode first = head.next;
         ListNode second = head;
 
-        while(first != second) {
+        while (first != second) {
             if (first == null || first.next == null) {
                 return false;
             }
@@ -138,7 +171,8 @@ public class Solution {
 
     /**
      * 遍历找到有序数组中的三个元素的期望值
-     * @param nums 有序数组
+     *
+     * @param nums   有序数组
      * @param target 期望值
      * @return 最接近期望值的值
      */
@@ -152,16 +186,14 @@ public class Solution {
             int sum = target - nums[a];
             b = a + 1;
             c = nums.length - 1;
-            while(b < c) {
-                answer = Math.abs(nums[a]+nums[b]+nums[c]-target) < Math.abs(answer-target) ?
-                        nums[a]+nums[b]+nums[c] : answer;
+            while (b < c) {
+                answer = Math.abs(nums[a] + nums[b] + nums[c] - target) < Math.abs(answer - target) ?
+                        nums[a] + nums[b] + nums[c] : answer;
                 if (nums[b] + nums[c] < sum) {
                     b++;
-                }
-                else if (nums[b] + nums[c] > sum) {
+                } else if (nums[b] + nums[c] > sum) {
                     c--;
-                }
-                else {
+                } else {
                     return target;
                 }
             }
@@ -172,8 +204,9 @@ public class Solution {
 
     /**
      * 删除链表动态位置的节点
+     *
      * @param head 头节点
-     * @param n 相对的位置
+     * @param n    相对的位置
      * @return 删除后的链表
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
@@ -181,7 +214,7 @@ public class Solution {
         int count = 0;
 
         node = tail = head;
-        while(tail.next != null) {
+        while (tail.next != null) {
             if (count != n) {
                 tail = tail.next;
                 count++;
@@ -193,8 +226,7 @@ public class Solution {
 
         if (count < n) {
             head = head.next;
-        }
-        else {
+        } else {
             assert node.next != null;
             node.next = node.next.next;
         }

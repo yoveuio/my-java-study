@@ -18,6 +18,29 @@ public class Solution {
     }
 
     /**
+     * LC1704. 判断字符串的两半是否相似
+     * 给你一个偶数长度的字符串 s 。将其拆分成长度相同的两半，前一半为 a ，后一半为 b 。
+     * 两个字符串 相似 的前提是它们都含有相同数目的元音（'a'，'e'，'i'，'o'，'u'，'A'，'E'，'I'，'O'，'U'）。注意，s 可能同时含有大写和小写字母。
+     * 如果 a 和 b 相似，返回 true ；否则，返回 false 。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/determine-if-string-halves-are-alike
+     */
+    public boolean halvesAreAlike(String s) {
+        final Set<Character> set = new HashSet<Character>(){{
+            add('a'); add('e'); add('i'); add('o'); add('u');
+            add('A'); add('E'); add('I'); add('O'); add('U');
+        }};
+        int countA = 0, countB = 0;
+        int n = s.length();
+        for (int i = 0; i < n >> 1; i++) {
+            if (set.contains(s.charAt(i))) countA++;
+            if (set.contains(s.charAt(n - i - 1))) countB++;
+        }
+        return countA == countB;
+    }
+
+    /**
      * LC205. 同构字符串
      * 给定两个字符串s和t，判断它们是否是同构的。
      *

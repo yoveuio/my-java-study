@@ -11,7 +11,7 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int num = solution.translateNum(624);
+        int num = solution.maxProfit(2, new int[]{3,2,6,5,0,3});
         System.out.println(num);
     }
 
@@ -31,6 +31,36 @@ public class Solution {
             dp2 = Math.max(-prices[i], dp2);
         }
         return dp1;
+    }
+
+    /**
+     * LC188. 买卖股票的最佳时机 IV
+     * 给定一个整数数组prices ，它的第i个元素prices[i]是一支给定的股票在第i天的价格。
+     * 设计一个算法来计算你所能获取的最大利润。你最多可以完成k笔交易。
+     * 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv
+     */
+    public int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        // 第i天买入
+        int[] dp1 = new int[k + 1];
+        // 第i天卖出
+        int[] dp2 = new int[k + 1];
+
+        for (int i = 1; i <= k; i++) {
+            dp1[i] = -prices[0];
+        }
+
+        for (int price : prices) {
+            for (int j = 1; j <= k; j++) {
+                // 买入
+                dp1[j] = Math.max(dp1[j], dp2[j - 1] - price);
+                dp2[j] = Math.max(dp2[j], dp1[j] + price);
+            }
+        }
+        return dp2[k];
     }
 
     /**

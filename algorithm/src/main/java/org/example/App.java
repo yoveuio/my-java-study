@@ -1,6 +1,7 @@
 package org.example;
 
-import java.util.HashMap;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * Hello world!
@@ -9,52 +10,26 @@ public class App {
 
     public static void main(String[] args) {
         App app = new App();
-        int i = app.cutBar(20, 3);
-        System.out.println(i);
-    }
 
-    public int cutBar(int n, int m) {
-        int slices = 1;
-        int cnt = 0;
-        while (slices < n) {
-            ++cnt;
-            slices += Math.min(slices, m);
-        }
-        return cnt;
     }
 
     /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     * 返回满足条件的最大的x。
-     *
-     * @param a int整型 代表题意中的a
-     * @param b int整型 代表题意中的b
-     * @param n int整型 代表题意中的n
-     * @return int整型
+     * LC1046. 最后一块石头的重量
+     * @param stones
+     * @return
      */
-    public int solve(int a, int b, int n) {
-        // write code here
-        for (int i = n; i >= 0; i--) {
-            if (i % a == b) {
-                return i;
-            }
+    public int lastStoneWeight(int[] stones) {
+        if (stones.length < 1) return 0;
+        Queue<Integer> queue = new PriorityQueue<>((x1, x2)-> x2 - x1);
+        for (int stone: stones) {
+            queue.offer(stone);
         }
-        return -1;
-    }
 
-    public int string2(int k, String s) {
-        HashMap<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < s.length(); ) {
-            char v = s.charAt(i);
-            while (++i < s.length() && s.charAt(i) == v) ;
-            map.put(v, map.getOrDefault(v, 0) + 1);
+        while (queue.size() > 1) {
+            int a = queue.poll();
+            int b = queue.poll();
+            if (a != b) queue.offer(a - b);
         }
-        int max = 0;
-        for (char i = 'a'; i <= 'z'; i++) {
-            Integer integer = map.getOrDefault(i, 0);
-
-            max = Math.max(max, integer);
-        }
-        return Math.min((max + k), s.length());
+        return queue.isEmpty() ? 0 : queue.peek();
     }
 }

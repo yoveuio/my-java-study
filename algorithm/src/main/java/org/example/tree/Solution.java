@@ -18,6 +18,39 @@ public class Solution {
         Solution solution = new Solution();
         solution.verifyPostorder(new int[]{4, 6, 7, 5});
     }
+    /* -------------------------------常量区---------------------------------------- */
+    TreeNode ansTree;
+
+    /**
+     * 剑指 Offer 68 - II. 二叉树的最近公共祖先
+     * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+     * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，
+     * 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+     *
+     * 题解：如果一个节点的左右子树同时找到了两个点，那么这个节点一定是最近的点
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof
+     * @param root 树的根节点
+     * @param p 指定的节点
+     * @param q 同上
+     * @return 返回最近的公共祖先
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        lowestCommonAncestorHandler(root, p, q);
+        return ansTree;
+    }
+
+    private boolean lowestCommonAncestorHandler(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return false;
+        boolean lson = lowestCommonAncestorHandler(root.left, p, q);
+        boolean rson = lowestCommonAncestorHandler(root.right, p, q);
+        if ((lson && rson) || ((lson || rson) && (root.val == p.val || root.val == q.val))) {
+            ansTree = root;
+        }
+        return lson || rson || root.val == p.val || root.val == q.val;
+    }
+
 
     /**
      * 剑指 Offer 55 - II. 平衡二叉树
