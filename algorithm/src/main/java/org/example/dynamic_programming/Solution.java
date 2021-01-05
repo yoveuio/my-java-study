@@ -16,6 +16,23 @@ public class Solution {
     }
 
     /**
+     * 剑指 Offer 63. 股票的最大利润
+     * 假设把某股票的价格按照时间先后顺序存储在数组中，请问买卖该股票一次可能获得的最大利润是多少？
+     */
+    public int maxProfit4(int[] prices) {
+        int n = prices.length;
+        if (n < 1) return 0;
+        int sell = 0;
+        int buy = -prices[0];
+
+        for (int price : prices) {
+            buy = Math.max(buy, -price);
+            sell = Math.max(sell, buy + price);
+        }
+        return sell;
+    }
+
+    /**
      * LC121 买卖股票的最佳时机
      *
      * 满足单调栈应用场景：需要高效率查询某个位置左右两侧比他大（或小）的数的位置

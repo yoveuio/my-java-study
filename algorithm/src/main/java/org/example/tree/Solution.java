@@ -26,6 +26,9 @@ public class Solution {
      * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
      * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，
      * 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+     * 说明:
+     *      - 所有节点的值都是唯一的。
+     *      - p、q 为不同节点且均存在于给定的二叉树中。
      *
      * 题解：如果一个节点的左右子树同时找到了两个点，那么这个节点一定是最近的点
      *
@@ -49,6 +52,30 @@ public class Solution {
             ansTree = root;
         }
         return lson || rson || root.val == p.val || root.val == q.val;
+    }
+
+    /**
+     * 剑指 Offer 68 - I. 二叉搜索树的最近公共祖先
+     * 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
+     * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，
+     * 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+     * 说明:
+     *      - 所有节点的值都是唯一的。
+     *      - p、q 为不同节点且均存在于给定的二叉树中。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof
+     */
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        lowestCommonAncestorHandler2(root, p, q);
+        return ansTree;
+    }
+
+    private void lowestCommonAncestorHandler2(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return;
+        if (p.val < root.val && q.val < root.val) lowestCommonAncestorHandler2(root.left, p, q);
+        else if (p.val > root.val && q.val > root.val) lowestCommonAncestorHandler2(root.right, p, q);
+        else ansTree = root;
     }
 
 
