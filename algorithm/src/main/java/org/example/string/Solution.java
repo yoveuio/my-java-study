@@ -18,6 +18,36 @@ public class Solution {
     }
 
     /**
+     * LC830. 较大分组的位置
+     * 在一个由小写字母构成的字符串 s 中，包含由一些连续的相同字符所构成的分组。
+     * 例如，在字符串 s = "abbxxxxzyy"中，就含有 "a", "bb", "xxxx", "z" 和 "yy" 这样的一些分组。
+     * 分组可以用区间 [start, end] 表示，其中 start 和 end 分别表示该分组的起始和终止位置的下标。上例中的 "xxxx" 分组用区间表示为 [3,6] 。
+     * 我们称所有包含大于或等于三个连续字符的分组为 较大分组 。
+     * 找到每一个 较大分组 的区间，按起始位置下标递增顺序排序后，返回结果。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/positions-of-large-groups
+     * @param s 一个字符串
+     * @return 返回其中连续字符大于等于三个的区间
+     */
+    public List<List<Integer>> largeGroupPositions(String s) {
+        int n = s.length();
+        List<List<Integer>> answers = new ArrayList<>();
+        int prev = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i == n || s.charAt(i) != s.charAt(prev)) {
+                if (i - prev >= 3) {
+                    List<Integer> answer = new ArrayList<>();
+                    answer.add(prev); answer.add(i - 1);
+                    answers.add(answer);
+                }
+                prev = i;
+            }
+        }
+        return answers;
+    }
+
+    /**
      * LC1704. 判断字符串的两半是否相似
      * 给你一个偶数长度的字符串 s 。将其拆分成长度相同的两半，前一半为 a ，后一半为 b 。
      * 两个字符串 相似 的前提是它们都含有相同数目的元音（'a'，'e'，'i'，'o'，'u'，'A'，'E'，'I'，'O'，'U'）。注意，s 可能同时含有大写和小写字母。

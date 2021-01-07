@@ -15,9 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="my_web_study" target="1.7" />
       <module name="thread-study" target="1.8" />
-      <module name="web-study" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
