@@ -24,6 +24,59 @@ public class Solution {
     /* ------------------------------------------------分割线--------------------------------------------------- */
 
     /**
+     * 旋转数组
+     * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+     * 解法一：数组旋转
+     *  将需要旋转的数组分三次翻转可以得到旋转后的数组
+     *
+     * 解法二：数字替换
+     *  使用temp存储被替换的元素，为他们找到合适的位置
+     *  总共需要gcd(k, n)次。gcd为最大公约数
+     *  class Solution {
+     *     public void rotate(int[] nums, int k) {
+     *         int n = nums.length;
+     *         k = k % n;
+     *         int count = gcd(k, n);
+     *         for (int start = 0; start < count; ++start) {
+     *             int current = start;
+     *             int prev = nums[start];
+     *             do {
+     *                 int next = (current + k) % n;
+     *                 int temp = nums[next];
+     *                 nums[next] = prev;
+     *                 prev = temp;
+     *                 current = next;
+     *             } while (start != current);
+     *         }
+     *     }
+     *
+     *     public int gcd(int x, int y) {
+     *         return y > 0 ? gcd(y, x % y) : x;
+     *     }
+     * }
+     *
+     * 链接：https://leetcode-cn.com/problems/rotate-array/solution/xuan-zhuan-shu-zu-by-leetcode-solution-nipk/
+     * 来源：力扣（LeetCode）
+     * @param nums 数组
+     * @param k 要求旋转的位置
+     */
+    public void rotate(int[] nums, int k) {
+        // 如果旋转次数超过数组的长度。每旋转一个数组的长度数组就会变回来
+        k %= nums.length;
+        reverse(nums, 0, nums.length - k - 1);
+        reverse(nums, nums.length - k, nums.length - 1);
+        reverse(nums, 0, nums.length - 1);
+    }
+
+    public void reverse(int[] nums, int l, int r) {
+        while (l < r) {
+            int temp = nums[l];
+            nums[l++] = nums[r];
+            nums[r++] = temp;
+        }
+    }
+
+    /**
      * 剑指 Offer 61. 扑克牌中的顺子
      * 从扑克牌中随机抽5张牌，判断是不是一个顺子，即这5张牌是不是连续的。2～10为数字本身，A为1，J为11，Q为12，K为13，而大、小王为 0 ，可以看成任意数字。A 不能视为 14。
      * 来源：力扣（LeetCode）
