@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.*;
+
 /**
  * @author yoveuio
  * @version 1.0
@@ -8,6 +10,63 @@ package org.example;
  * @date 2021/1/9 9:20
  */
 public class Solution {
+
+    class LRUCache {
+
+        Map<Integer, Node> map;
+        LinkedList<Node> deque;
+        int capacity;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            map = new HashMap<>();
+            deque = new LinkedList<>();
+        }
+
+        public int get(int key) {
+            if (!map.containsKey(key)) return -1;
+            Node node = map.get(key);
+            updateDeque(node);
+            return map.get(key).value;
+        }
+
+        public void put(int key, int value) {
+            if (get(key) != -1) {
+                Node node = deque.pollLast();
+                node.value = value;
+                deque.offerLast(node);
+            }
+        }
+
+        void updateDeque(Node node) {
+            deque.remove(node);
+            deque.addLast(node);
+        }
+
+        class Node {
+            int key;
+            int value;
+        }
+    }
+
+    public List<String> summaryRanges(int[] nums) {
+        int n = nums.length;
+        List<String> answers = new ArrayList<>();
+        StringBuilder answer = new StringBuilder();
+        int prev = 0, curr = 0;
+        for (int i = 1; i <= n; i++) {
+            if (i == n || nums[i] != nums[curr] + 1) {
+                if (prev != curr) answer.append(nums[prev]).append("->").append(nums[curr]);
+                else answer.append(nums[prev]);
+                answers.add(answer.toString());
+                answer.delete(0, answer.length());
+                prev = i;
+            }
+            curr++;
+        }
+        return answers;
+    }
+
     public int maxProfit(int[] prices) {
         if (prices.length == 0) return 0;
         int sell1 = 0, buy1 = -prices[0];
