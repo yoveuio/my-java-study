@@ -10,6 +10,7 @@ import java.util.*;
  * @date 2020/12/14 9:45
  */
 public class Solution {
+
     /*Set<Integer> cols = new HashSet<>();
     Set<Integer> slashes1 = new HashSet<>();
     Set<Integer> slashes2 = new HashSet<>();*/
@@ -18,7 +19,7 @@ public class Solution {
     public List<List<String>> solveNQueens(int n) {
         int[] queens = new int[n];
         Arrays.fill(queens, -1);
-        List<List<String>> solutions = new ArrayList<List<String>>();
+        List<List<String>> solutions = new ArrayList<>();
         solve(solutions, queens, n, 0, 0, 0, 0);
         return solutions;
     }

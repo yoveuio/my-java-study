@@ -17,6 +17,30 @@ public class Solution {
     }
 
     /**
+     * LC169. 多数元素
+     * 给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素。
+     *
+     * 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/majority-element
+     */
+    public int majorityElement(int[] nums) {
+        int res = 0, max = nums[0];
+        for (int num: nums) {
+            if (max == num) res++;
+            else if (res == 0) {
+                max = num;
+                res++;
+            }
+            else {
+                res--;
+            }
+        }
+        return max;
+    }
+
+    /**
      * 剑指 Offer 65. 不用加减乘除做加法
      * 写一个函数，求两个整数之和，要求在函数体内不得使用 “+”、“-”、“*”、“/” 四则运算符号。
      * 状态转移方程： Y = ((a ^ b) & ~res) | (res & ~(a ^ b))

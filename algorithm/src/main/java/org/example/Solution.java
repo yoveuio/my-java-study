@@ -31,11 +31,18 @@ public class Solution {
         }
 
         public void put(int key, int value) {
+            Node node = map.getOrDefault(key, new Node(key, value));
             if (get(key) != -1) {
-                Node node = deque.pollLast();
                 node.value = value;
-                deque.offerLast(node);
+                return;
             }
+
+            if (deque.size() >= capacity) {
+                Node first = deque.removeFirst();
+                map.remove(first.key);
+            }
+            deque.addLast(node);
+            map.put(key, node);
         }
 
         void updateDeque(Node node) {
@@ -46,6 +53,11 @@ public class Solution {
         class Node {
             int key;
             int value;
+
+            public Node(int key, int value) {
+                this.key = key;
+                this.value = value;
+            }
         }
     }
 

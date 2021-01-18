@@ -15,15 +15,31 @@ import java.util.*;
 public class Solution {
 
     /**
+     * LC160. 相交链表
+     * 编写一个程序，找到两个单链表相交的起始节点。
+     *
+     * 走你来时的路
+     * 关键是要遍历到链表的最后一个节点后面的null，只有这样当两个链表不相交的时候有共同的值null，才能走出循环
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+        ListNode pointA = headA;
+        ListNode pointB = headB;
+
+        while (pointA != pointB) {
+            pointA = pointA == null ? headB : pointA.next;
+            pointB = pointB == null ? headA : pointB.next;
+        }
+        return pointA;
+    }
+
+    /**
      * LC86. 分隔链表
      * 给你一个链表和一个特定值 x ，请你对链表进行分隔，使得所有小于 x 的节点都出现在大于或等于 x 的节点之前。
      * 你应当保留两个分区中每个节点的初始相对位置。
      *
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/partition-list
-     * @param head
-     * @param x
-     * @return
      */
     public ListNode partition(ListNode head, int x) {
         ListNode sentinelA = new ListNode(-1);
@@ -43,28 +59,6 @@ public class Solution {
         pointA.next = sentinelB.next;
         pointB.next = null;
         return sentinelA.next;
-    }
-
-    /**
-     * 剑指 Offer 52. 两个链表的第一个公共节点
-     * (https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/)
-     * 输入两个链表，找出它们的第一个公共节点。
-     * 浪漫相遇?
-     * @param headA 链表A
-     * @param headB
-     * @return
-     */
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null) return null;
-        ListNode pointA = headA;
-        ListNode pointB = headB;
-
-        while (pointA != pointB) {
-            pointA = pointA != null ? pointA.next : headB;
-            pointB = pointB != null ? pointB.next : headA;
-        }
-
-        return pointA;
     }
 
     /**

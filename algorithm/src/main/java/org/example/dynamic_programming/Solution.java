@@ -16,6 +16,58 @@ public class Solution {
     }
 
     /**
+     * LC152. 乘积最大子数组
+     * 给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
+     * 分正负讨论
+     */
+    public int maxProduct(int[] nums) {
+        if (nums.length == 0) return 0;
+        int n = nums.length;
+        int[] min = new int[n];
+        int[] max = new int[n];
+
+        min[0] = nums[0];
+        max[0] = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            max[i] = Math.max(max[i - 1] * nums[i], Math.max(min[i - 1] * nums[i], nums[i]));
+            min[i] = Math.min(min[i - 1] * nums[i], Math.min(max[i - 1] * nums[i], nums[i]));
+        }
+
+        int ans = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            ans = Math.max(max[i], ans);
+        }
+        return ans;
+    }
+
+    /**
+     * LC198. 打家劫舍
+     * 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，
+     * 影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，
+     * 如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+     *
+     * 给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/house-robber
+     */
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if (n == 0) return 0;
+        if (n == 1) return nums[0];
+        int[] dp = new int[n];
+
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[1], nums[0]);
+        for (int i = 2; i < n; i++) {
+            dp[i] = Math.max(dp[i - 2] + nums[i], dp[i -  1]);
+        }
+
+        return Math.max(dp[n - 1], dp[n - 2]);
+    }
+
+    /**
      * 剑指 Offer 63. 股票的最大利润
      * 假设把某股票的价格按照时间先后顺序存储在数组中，请问买卖该股票一次可能获得的最大利润是多少？
      */

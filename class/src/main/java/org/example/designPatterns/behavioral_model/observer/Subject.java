@@ -1,4 +1,4 @@
-package org.example.designPatterns.observer;
+package org.example.designPatterns.behavioral_model.observer;
 
 /**
  * 主题行为
