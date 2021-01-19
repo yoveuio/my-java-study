@@ -11,6 +11,36 @@ import java.util.*;
  */
 public class Solution {
 
+    public int findKthLargest(int[] nums, int k) {
+        return sort(nums, 0, nums.length - 1, k - 1);
+    }
+
+    private int sort(int[] nums, int l, int r, int k) {
+        int j = partition(nums, l, r);
+        if (j == k) return nums[j];
+        return j < k ? sort(nums, j + 1, r, k) : sort(nums, l, j - 1, k);
+    }
+
+    private int partition(int[] nums, int l, int r) {
+        int lt = l, gt = r + 1;
+        int v = nums[l];
+        while (true) {
+            while (++lt <= r && nums[lt] > v);
+            while (--gt >= l && nums[gt] < v);
+            if (lt >= gt) break;
+            swap(nums, lt, gt);
+        }
+        swap(nums, l, lt);
+        return lt;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        if (nums[i] == nums[j]) return;
+        nums[i] ^= nums[j];
+        nums[j] ^= nums[i];
+        nums[i] ^= nums[j];
+    }
+
     class LRUCache {
 
         Map<Integer, Node> map;

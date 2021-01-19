@@ -16,6 +16,29 @@ public class Solution {
     }
 
     /**
+     * LC221. 最大正方形
+     * 在一个由 '0' 和 '1' 组成的二维矩阵内，找到只包含 '1' 的最大正方形，并返回其面积。
+     */
+    public int maximalSquare(char[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) return 0;
+        int n = matrix.length, m = matrix[0].length;
+        int max = Integer.MIN_VALUE;
+        int[][] dp = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] != '1') continue;
+                if (i == 0 || j == 0)
+                    dp[i][j] = 1;
+                else
+                    dp[i][j] = Math.min(dp[i - 1][j], Math.min(dp[i - 1][j - 1], dp[i][j - 1])) + 1;
+                max = Math.max(dp[i][j], max);
+            }
+        }
+        return max * max;
+    }
+
+    /**
      * LC152. 乘积最大子数组
      * 给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
      * 分正负讨论
