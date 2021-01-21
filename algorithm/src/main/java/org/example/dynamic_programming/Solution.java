@@ -11,8 +11,36 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int num = solution.maxProfit(2, new int[]{3,2,6,5,0,3});
+        String num = solution.longestPalindrome("aaaa");
         System.out.println(num);
+    }
+
+    /**
+     * 5. 最长回文子串
+     * @param s 给你一个字符串 s，找到 s 中最长的回文子串
+     */
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        if (n < 2) return s;
+        int begin = 0, max = 1;
+
+        boolean[][] dp = new boolean[n][n];
+        for (int len = 0; len < n; len++) {
+            for (int i = 0; i < n - len; i++) {
+                int j = i + len;
+                if (s.charAt(i) != s.charAt(j)) {
+                    dp[i][j] = false;
+                    continue;
+                }
+                if (j - i < 3) dp[i][j] = true;
+                else dp[i][j] = dp[i + 1][j - 1];
+                if (dp[i][j] && j - i + 1 > max) {
+                    begin = i;
+                    max = j - i + 1;
+                }
+            }
+        }
+        return s.substring(begin, begin + max);
     }
 
     /**

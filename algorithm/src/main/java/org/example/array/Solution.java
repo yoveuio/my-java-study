@@ -23,6 +23,7 @@ public class Solution {
     }
     /* ------------------------------------------------分割线--------------------------------------------------- */
 
+
     /**
      * 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
@@ -327,6 +328,13 @@ public class Solution {
      * 根据身高排列数组
      */
     public int[][] reconstructQueue(int[][] people) {
+        // people.length 就是 people的个数，people[0].length就是people[0]中的元素的个数
+        // people.length = people[i]有多少个
+        // people[0].length = people[0][i]有多少个
+        if (people.length == 0 || people[0].length == 0) return people;
+
+
+
         Arrays.sort(people, (o1, o2) -> {
             if (o1[0] != o2[0]) {
                 return o1[0] - o2[0];

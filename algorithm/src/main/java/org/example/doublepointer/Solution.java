@@ -25,6 +25,29 @@ public class Solution {
     }
 
     /**
+     * LC11. 盛最多水的容器
+     * 给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点(i,ai)。
+     * 在坐标内画 n 条垂直线，垂直线 i的两个端点分别为(i, ai) 和 (i, 0) 。找出其中的两条线，使得它们与x轴共同构成的容器可以容纳最多的水。
+     *
+     * 说明：你不能倾斜容器。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/container-with-most-water
+     */
+    public int maxArea(int[] height) {
+        int lo = 0, hi = height.length - 1;
+        int ans = 0;
+        while (lo < hi) {
+            ans = Math.max(ans, Math.min(height[lo], height[hi]) * (hi - lo));
+            if (height[lo] <= height[hi]) {
+                ++lo;
+            }
+            else --hi;
+        }
+        return ans;
+    }
+
+    /**
      * LC142. 环形链表 II
      * 给定一个链表，返回链表开始入环的第一个节点。如果链表无环，则返回null。
      * 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。

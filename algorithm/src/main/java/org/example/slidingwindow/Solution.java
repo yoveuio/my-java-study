@@ -1,7 +1,6 @@
 package org.example.slidingwindow;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 /**
  * @ClassName Solution
@@ -18,7 +17,27 @@ public class Solution {
         System.out.println(ints);
     }
 
-
+    /**
+     * LC3. 无重复字符的最长子串
+     * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        Set<Character> set = new HashSet<>();
+        int ans = 0;
+        int index = 0;
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            while (set.contains(c)) {
+                set.remove(s.charAt(index++));
+            }
+            set.add(c);
+            ans = Math.max(ans, i - index + 1);
+        }
+        return ans;
+    }
 
     /**
      * 剑指 Offer 59 - I. 滑动窗口的最大值
