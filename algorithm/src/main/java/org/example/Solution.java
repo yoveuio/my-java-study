@@ -20,6 +20,44 @@ public class Solution {
         solution.isPalindrome(node);
     }
 
+    public class RandomListNode {
+        int label;
+        RandomListNode next = null;
+        RandomListNode random = null;
+
+        RandomListNode(int label) {
+            this.label = label;
+        }
+    }
+
+    public RandomListNode Clone(RandomListNode pHead) {
+        if (pHead == null) return null;
+        RandomListNode node = pHead;
+        while (node != null) {
+            RandomListNode copy = new RandomListNode(node.label);
+            copy.next = node.next;
+            node.next = copy;
+            node = copy.next;
+        }
+
+        node = pHead;
+        while (node != null) {
+            RandomListNode copy = node.next;
+            copy.random = node.random == null ? null : node.random.next;
+            node = copy.next;
+        }
+
+        node = pHead;
+        RandomListNode pCloneHead = pHead.next;
+        while (node != null) {
+            RandomListNode copy = node.next;
+            node.next = copy.next;
+            copy.next = copy.next == null ? null : copy.next.next;
+            node = copy.next;
+        }
+        return pCloneHead;
+    }
+
     public boolean isPalindrome(ListNode head) {
         ListNode halfOfEnd = halfOfEnd(head);
         halfOfEnd = reverseList(halfOfEnd);
