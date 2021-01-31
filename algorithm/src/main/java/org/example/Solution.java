@@ -1,6 +1,9 @@
 package org.example;
 
-import org.example.leetcode.ListNode;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author yoveuio
@@ -13,83 +16,34 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        ListNode node = new ListNode(1);
-        node.next = new ListNode(1);
-        node.next.next = new ListNode(2);
-        node.next.next.next = new ListNode(1);
-        solution.isPalindrome(node);
     }
 
-    public class RandomListNode {
-        int label;
-        RandomListNode next = null;
-        RandomListNode random = null;
+    StringBuilder sb = new StringBuilder();
+    Map<Character, Integer> map = new HashMap<>();
+    ArrayList<String> answer = new ArrayList<>();
 
-        RandomListNode(int label) {
-            this.label = label;
+    public ArrayList<String> Permutation(String str) {
+        if (str.length() == 0) return answer;
+        for (int i = 0; i < str.length(); i++) {
+            map.put(str.charAt(i), map.getOrDefault(str.charAt(i), 0) + 1);
         }
+        dfs(0, str.length());
+        return answer;
     }
 
-    public RandomListNode Clone(RandomListNode pHead) {
-        if (pHead == null) return null;
-        RandomListNode node = pHead;
-        while (node != null) {
-            RandomListNode copy = new RandomListNode(node.label);
-            copy.next = node.next;
-            node.next = copy;
-            node = copy.next;
+    private void dfs(int length, int size) {
+        if (length == size) {
+            answer.add(sb.toString());
         }
-
-        node = pHead;
-        while (node != null) {
-            RandomListNode copy = node.next;
-            copy.random = node.random == null ? null : node.random.next;
-            node = copy.next;
+        Set<Character> set = map.keySet();
+        for (char c : set) {
+            int count = map.get(c);
+            if (count <= 0) continue;
+            map.replace(c, count - 1);
+            sb.append(c);
+            dfs(length + 1, size);
+            sb.deleteCharAt(length - 1);
+            map.put(c, count);
         }
-
-        node = pHead;
-        RandomListNode pCloneHead = pHead.next;
-        while (node != null) {
-            RandomListNode copy = node.next;
-            node.next = copy.next;
-            copy.next = copy.next == null ? null : copy.next.next;
-            node = copy.next;
-        }
-        return pCloneHead;
-    }
-
-    public boolean isPalindrome(ListNode head) {
-        ListNode halfOfEnd = halfOfEnd(head);
-        halfOfEnd = reverseList(halfOfEnd);
-
-        while (halfOfEnd != null) {
-            if (halfOfEnd.val != head.val) return false;
-            halfOfEnd = halfOfEnd.next;
-            head = head.next;
-        }
-        return true;
-    }
-
-    public ListNode halfOfEnd(ListNode head) {
-        if (head == null) return null;
-        ListNode slow = head, fast = head.next;
-        while (fast != null && fast.next != null) {
-            fast = fast.next.next;
-            slow = slow.next;
-        }
-        return slow.next;
-    }
-
-    public ListNode reverseList(ListNode head) {
-        if (head == null) return null;
-        ListNode prev = null;
-        ListNode curr = head;
-        while (curr != null) {
-            ListNode node = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = node;
-        }
-        return prev;
     }
 }
