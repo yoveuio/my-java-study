@@ -1,0 +1,21 @@
+syntax = "proto3";
+import "google/protobuf/any.proto";
+option java_outer_classname = "NettyMessageProto";
+
+message NettyMessage {
+  Header header = 1;
+  Object object = 2;
+}
+
+message Header {
+  int32 crcCode = 1;
+  int32 version = 2;
+  int64 sessionID = 3;
+  bytes type = 4;
+  bytes priority = 5;
+  map<string, Object> attachment = 6;
+}
+
+message Object {
+  google.protobuf.Any content = 1;
+}
