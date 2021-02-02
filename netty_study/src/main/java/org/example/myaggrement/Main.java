@@ -72,11 +72,13 @@ public class Main {
         System.out.println("Before encode: " + req.toString());
         NettyMessageProto.Object req2 = decode(encode(req));
         Any content = req2.getContent();
-        System.out.println(NettyMessageProto.Header.class);
-        System.out.println(content.getClass());
         NettyMessageProto.Header unpack = content.unpack(NettyMessageProto.Header.class);
         System.out.println(unpack.getCrcCode());
+        byte[] bytes = req.toByteArray();
+        System.out.println(bytes);
         System.out.println("After decode: " + req.toString());
         System.out.println("Assert equal : --> " + req2.equals(req));
+
+        
     }
 }

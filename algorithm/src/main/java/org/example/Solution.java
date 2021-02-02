@@ -1,9 +1,6 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author yoveuio
@@ -14,36 +11,40 @@ import java.util.Set;
  */
 public class Solution {
 
-    public static void main(String[] args) {
-        Solution solution = new Solution();
+    public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+        if (k > input.length || k < 0 || input.length == 0) return new ArrayList<>();
+        return getKLeast(input, 0, input.length-1, k - 1);
     }
 
-    StringBuilder sb = new StringBuilder();
-    Map<Character, Integer> map = new HashMap<>();
-    ArrayList<String> answer = new ArrayList<>();
-
-    public ArrayList<String> Permutation(String str) {
-        if (str.length() == 0) return answer;
-        for (int i = 0; i < str.length(); i++) {
-            map.put(str.charAt(i), map.getOrDefault(str.charAt(i), 0) + 1);
+    private ArrayList<Integer> getKLeast(int[] input, int l, int r, int k) {
+        int j = partition(input, l, r);
+        if (j == k) {
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int i = 0; i <= j; i++) {
+                list.add(input[i]);
+            }
+            return list;
         }
-        dfs(0, str.length());
-        return answer;
+        return j > k ? getKLeast(input, l, j - 1, k) : getKLeast(input, j + 1, r, k);
     }
 
-    private void dfs(int length, int size) {
-        if (length == size) {
-            answer.add(sb.toString());
+    private int partition(int[] nums, int l, int r) {
+        int lo = l, hi = r + 1;
+        int v = nums[lo];
+        while (true) {
+            while (++lo <= r && nums[lo] < v);
+            while (--hi > l && nums[hi] > v);
+            if (lo >= hi) break;
+            swap(nums, lo, hi);
         }
-        Set<Character> set = map.keySet();
-        for (char c : set) {
-            int count = map.get(c);
-            if (count <= 0) continue;
-            map.replace(c, count - 1);
-            sb.append(c);
-            dfs(length + 1, size);
-            sb.deleteCharAt(length - 1);
-            map.put(c, count);
-        }
+        swap(nums, l, hi);
+        return hi;
+    }
+
+    public void swap(int[] nums, int i, int j) {
+        if (nums[i] == nums[j]) return;
+        nums[i] ^= nums[j];
+        nums[j] ^= nums[i];
+        nums[i] ^= nums[j];
     }
 }
