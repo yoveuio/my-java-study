@@ -1,5 +1,5 @@
 package netty;
-option java_package = "org.example.codec.protobuf";
+option java_package = "org.example.myaggrement.codec.protobuf";
 option java_outer_classname = "SubscribeRespProto";
 
 message SubscribeResp {

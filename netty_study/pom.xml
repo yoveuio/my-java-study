@@ -13,6 +13,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.42.Final</version>
@@ -37,20 +43,32 @@
             <version>3.14.0</version>
         </dependency>
 
-<!--        protostuff-->
+
+        <!-- https://mvnrepository.com/artifact/io.protostuff/protostuff-runtime -->
         <dependency>
-            <groupId>com.dyuproject.protostuff</groupId>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
             <artifactId>protostuff-core</artifactId>
-            <version>1.1.5</version>
-            <scope>provided</scope>
+            <version>1.7.2</version>
+            <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.dyuproject.protostuff</groupId>
-            <artifactId>protostuff-runtime</artifactId>
-            <version>1.1.5</version>
-            <scope>provided</scope>
-        </dependency>
+        <!--        <dependency>-->
+<!--            <groupId>com.dyuproject.protostuff</groupId>-->
+<!--            <artifactId>protostuff-runtime</artifactId>-->
+<!--            <version>1.1.5</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>com.dyuproject.protostuff</groupId>-->
+<!--            <artifactId>protostuff-core</artifactId>-->
+<!--            <version>1.1.5</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>

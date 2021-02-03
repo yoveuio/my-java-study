@@ -1,4 +1,4 @@
-package org.example.codec.protobuf;
+package org.example.myaggrement.codec.protobuf;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

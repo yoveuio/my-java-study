@@ -1,4 +1,4 @@
-package org.example.codec.protobuf;
+package org.example.myaggrement.codec.protobuf;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 

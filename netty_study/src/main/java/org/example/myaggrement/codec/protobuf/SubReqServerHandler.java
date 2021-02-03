@@ -1,4 +1,4 @@
-package org.example.codec.protobuf;
+package org.example.myaggrement.codec.protobuf;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

@@ -1,10 +1,5 @@
 package org.example.myaggrement;
 
-import com.google.protobuf.Any;
-import com.google.protobuf.ByteString;
-import com.google.protobuf.InvalidProtocolBufferException;
-import org.example.myaggrement.entity.NettyMessageProto;
-
 /**
  * @author yoveuio
  * @version 1.0
@@ -37,48 +32,5 @@ import org.example.myaggrement.entity.NettyMessageProto;
  * @date 2021/1/31 21:15
  */
 public class Main {
-    private static byte[] encode (NettyMessageProto.Object req) {
-        return req.toByteArray();
-    }
 
-    private static NettyMessageProto.Object decode(byte[] body) throws InvalidProtocolBufferException {
-        return NettyMessageProto.Object.parseFrom(body);
-    }
-
-    private static NettyMessageProto.Object createNettyMessageObject() {
-        // 通过newBuilder创建SubscribeReqProto.SubscribeReq的Builder实例
-        NettyMessageProto.Object.Builder builder = NettyMessageProto.Object.newBuilder();
-        // 进行属性设置
-
-        builder.setContent(Any.pack(createNettyMessageHeader()));
-        return builder.build();
-    }
-
-    private static NettyMessageProto.NettyMessage createNettyMessage() {
-        NettyMessageProto.NettyMessage.Builder builder = NettyMessageProto.NettyMessage.newBuilder();
-
-        return builder.build();
-    }
-
-    private static NettyMessageProto.Header createNettyMessageHeader() {
-        NettyMessageProto.Header.Builder builder = NettyMessageProto.Header.newBuilder();
-        builder.setCrcCode(12);
-        builder.setPriority(ByteString.copyFrom(new byte[]{123}));
-        return builder.build();
-    }
-
-    public static void main(String[] args) throws InvalidProtocolBufferException {
-        NettyMessageProto.Object req = createNettyMessageObject();
-        System.out.println("Before encode: " + req.toString());
-        NettyMessageProto.Object req2 = decode(encode(req));
-        Any content = req2.getContent();
-        NettyMessageProto.Header unpack = content.unpack(NettyMessageProto.Header.class);
-        System.out.println(unpack.getCrcCode());
-        byte[] bytes = req.toByteArray();
-        System.out.println(bytes);
-        System.out.println("After decode: " + req.toString());
-        System.out.println("Assert equal : --> " + req2.equals(req));
-
-        
-    }
 }

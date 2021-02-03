@@ -1,10 +1,7 @@
 package org.example.myaggrement.util;
 
-import com.google.protobuf.Any;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.example.myaggrement.entity.NettyMessageProto;
-import org.example.myaggrement.entity.enumerate.MessageType;
 
 /**
  * @author yoveuio
@@ -21,12 +18,5 @@ public class LoginAuthReqHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        NettyMessageProto.NettyMessage message = (NettyMessageProto.NettyMessage) msg;
-        int type;
-        if (message.getHeader() != null
-        && (type = message.getHeader().getType().byteAt(0) & MessageType.LOGIN_RESP.getValue()) == 1) {
-            Any content = message.getObject().getContent();
-
-        }
     }
 }

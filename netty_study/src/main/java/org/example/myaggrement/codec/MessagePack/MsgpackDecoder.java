@@ -1,4 +1,4 @@
-package org.example.codec.MessagePack;
+package org.example.myaggrement.codec.MessagePack;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
