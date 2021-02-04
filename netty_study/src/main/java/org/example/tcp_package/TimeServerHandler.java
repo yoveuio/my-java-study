@@ -2,10 +2,9 @@ package org.example.tcp_package;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.example.myaggrement.entity.NettyMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Date;
 
 /**
  * @ClassName TimeServerHandler
@@ -21,12 +20,11 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         //msg已经被StringDecoder译码为String类型
-        String body = (String) msg;
+        NettyMessage body = (NettyMessage) msg;
         System.out.println("The time server receive order : " + body +
                 " ; the counter is : " + ++counter);
-        String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body)?
-                new Date(System.currentTimeMillis()).toString() : "BAD ORDER";
-        ctx.writeAndFlush(currentTime);
+        System.out.println(body);
+        ctx.writeAndFlush(body);
     }
 
     @Override

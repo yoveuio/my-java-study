@@ -1,11 +1,11 @@
 package org.example.tcp_package;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.example.myaggrement.entity.MessageBody;
+import org.example.myaggrement.entity.MessageHeader;
+import org.example.myaggrement.entity.NettyMessage;
 
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 /**
@@ -29,11 +29,10 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ByteBuf message = null;
+        MessageHeader header = new MessageHeader(0x0001, 1, 1L, (byte)1, (byte)1, null);
+        MessageBody<Integer> body = new MessageBody<>(1, 1);
+        NettyMessage message = new NettyMessage(header, body);
         for (int i=0; i<100; ++i) {
-            message = Unpooled.buffer(req.length);
-            //将消息输入输入缓冲区
-            message.writeBytes(req);
             //为了节约系统资源,消息不会直接进入channel,而是先传入缓冲区,然后一次性传入channel
             ctx.writeAndFlush(message);
         }
@@ -42,8 +41,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         //msg已经被StringDecoder译码为String类型
-        String body = (String)msg;
-        System.out.println("Now is : " + body + " : the counter is : " + ++counter);
+        System.out.println(msg.toString());
     }
 
     @Override
