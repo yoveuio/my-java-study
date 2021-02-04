@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.leetcode.ListNode;
+
 /**
  * @author yoveuio
  * @version 1.0
@@ -8,42 +10,34 @@ package org.example;
  * @date 2021/1/9 9:20
  */
 class Solution {
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        int i = solution.reversePairs(new int[]{7, 5, 6, 4});
-        System.out.println(i);
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        ListNode point1 = pHead1;
+        ListNode point2 = pHead2;
+
+        while (point1 != point2) {
+            point1 = point1 == null ? pHead2 : point1.next;
+            point2 = point2 == null ? pHead1 : point2.next;
+        }
+        return point1;
     }
 
-    int[] buffer;
-    final int KMOD = 1000000007;
-    int answer = 0;
-
-    public int reversePairs(int [] array) {
-        buffer = new int[array.length];
-        dfs(array, 0, array.length - 1);
-        return answer;
+    public int GetNumberOfK(int [] array , int k) {
+        return getMinIndex(array, k + 1) - getMinIndex(array, k);
     }
 
-    private void dfs(int[] nums, int l, int r) {
-        if (l >= r) return ;
-        int mid = (r - l >> 1) + l;
-        dfs(nums, l, mid);
-        dfs(nums, mid + 1, r);
-        merge(nums, l, r, mid);
-    }
+    public int getMinIndex(int[] nums, int k) {
+        int l = 0, r = nums.length - 1;
+        int mid ;
 
-    private void merge(int[] nums, int l, int r, int mid) {
-        int i = l, j = mid + 1;
-        if (r - l + 1 >= 0) System.arraycopy(nums, l, buffer, l, r - l + 1);
-
-        for (int k = l; k <= r; k++) {
-            if (i > mid) nums[k] = buffer[j++];
-            else if (j > r) nums[k] = buffer[i++];
-            else if (buffer[i] <= buffer[j]) nums[k] = buffer[i++];
+        while (l <= r) {
+            mid = (r - l >> 1) + l;
+            if (nums[mid] <= k) {
+                r = mid - 1;
+            }
             else {
-                answer += (mid - i + 1) % KMOD;
-                nums[k] = buffer[j++];
+                l = mid + 1;
             }
         }
+        return r;
     }
 }
