@@ -10,7 +10,8 @@ package org.example;
 class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        solution.reversePairs(new int[]{7,5,6,4});
+        int i = solution.reversePairs(new int[]{7, 5, 6, 4});
+        System.out.println(i);
     }
 
     int[] buffer;

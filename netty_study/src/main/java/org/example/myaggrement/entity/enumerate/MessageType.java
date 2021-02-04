@@ -6,6 +6,9 @@ package org.example.myaggrement.entity.enumerate;/**
   * @Version 1.0
   */
 public enum MessageType {
+    MAGIC_NUMBER("魔数", 0xBABE0101),
+
+
     LOGIN_RESP("握手信息", 1);
     ;
 

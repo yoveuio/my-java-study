@@ -4,7 +4,6 @@ import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
-import org.example.myaggrement.entity.NettyMessage;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 并将schema对象缓存起来
  * @date 2021/2/2 23:05
  */
-public class SerializationUtil {
+public class ProtostuffSerialization {
     // 避免每次序列化都要重新申请Buffer空间
     private static LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
     // 缓存schema对象的map
@@ -78,15 +77,5 @@ public class SerializationUtil {
         ProtostuffIOUtil.mergeFrom(data, message, schema);
         // 返回反序列化对象
         return message;
-    }
-
-    public static void main(String[] args) {
-        NettyMessage.NettyMessageBuilder builder = NettyMessage.builder();
-        builder.version(0x0101).sessionID(1L).priority((byte) 1).attachment(null);
-        NettyMessage message = builder.build();
-        byte[] serialize = serialize(message);
-        System.out.println(message);
-        NettyMessage deserialize = deserialize(serialize, NettyMessage.class);
-        System.out.println(deserialize);
     }
 }
