@@ -2,7 +2,6 @@ package org.example.tcp_package;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.example.myaggrement.entity.MessageBody;
 import org.example.myaggrement.entity.MessageHeader;
 import org.example.myaggrement.entity.NettyMessage;
 
@@ -30,8 +29,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         MessageHeader header = new MessageHeader(0x0001, 1, 1L, (byte)1, (byte)1, null);
-        MessageBody<Integer> body = new MessageBody<>(1, 1);
-        NettyMessage message = new NettyMessage(header, body);
+        NettyMessage message = new NettyMessage(header, 1);
         for (int i=0; i<100; ++i) {
             //为了节约系统资源,消息不会直接进入channel,而是先传入缓冲区,然后一次性传入channel
             ctx.writeAndFlush(message);

@@ -14,11 +14,12 @@ import java.util.Map;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Builder
 public final class MessageHeader {
     private final int crcCode = 0xBABE0101;
-    private int version;
+    private int version = 0x0101;
     private int length;
     private long sessionID;
     private byte type;

@@ -6,16 +6,16 @@ package org.example.myaggrement.entity.enumerate;/**
   * @Version 1.0
   */
 public enum MessageType {
-    MAGIC_NUMBER("魔数", 0xBABE0101),
-
-
-    LOGIN_RESP("握手信息", 1);
+    LOGIN_REQ("握手请求报文", (byte) 1),
+    LOGIN_RESP("握手应答报文", (byte) 2),
+    HEARTBEAT_REQ("心跳请求报文", (byte) 3),
+    HEARTBEAT_RESP("心跳应答报文", (byte) 4)
     ;
 
     String name;
-    int value;
+    byte value;
 
-    MessageType(String name, int value) {
+    MessageType(String name, byte value) {
         this.name = name;
         this.value = value;
     }
@@ -24,11 +24,11 @@ public enum MessageType {
         return name;
     }
 
-    public int getValue() {
+    public byte getValue() {
         return value;
     }
 
-    public static MessageType getByValue(int value) {
+    public static MessageType getByValue(byte value) {
         for (MessageType messageType: MessageType.values()) {
             if (messageType.getValue() == value) {
                 return messageType;
