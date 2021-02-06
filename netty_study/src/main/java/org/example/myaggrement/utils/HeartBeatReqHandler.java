@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @className HeartBeatReqHandler
  * @description 心跳请求报文
- *  握手成功之后，定期发送心跳信息。由于NioEventLoop是一个Schedule，因而支持定时器的执行
+ *  握手成功之后，由客户端定期发送心跳信息。由于NioEventLoop是一个Schedule，因而支持定时器的执行
  *  心跳计时器的单位是毫秒，默认为5000，即5秒发送一条心跳信息
  * @date 2021/2/4 22:11
  */
@@ -23,6 +23,7 @@ public class HeartBeatReqHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println(2);
         NettyMessage message = (NettyMessage) msg;
         if (message.getHeader() != null
                 && message.getHeader().getType() == MessageType.LOGIN_RESP.getValue()) {

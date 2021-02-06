@@ -1,4 +1,4 @@
-package org.example.tcp_package;
+package org.example.tcp_package.timer;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
