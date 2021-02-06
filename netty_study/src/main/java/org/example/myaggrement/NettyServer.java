@@ -1,4 +1,4 @@
-package org.example;
+package org.example.myaggrement;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
