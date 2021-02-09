@@ -1,10 +1,6 @@
 package org.example;
 
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import org.example.leetcode.ListNode;
 
 /**
  * @author yoveuio
@@ -14,20 +10,77 @@ import java.util.Set;
  * @date 2021/1/9 9:20
  */
 class Solution {
-
-    Map<Character, Boolean> map = new LinkedHashMap<>();
-
-    public void Insert(char ch)
+    public TreeLinkNode GetNext(TreeLinkNode pNode)
     {
-        map.put(ch, map.containsKey(ch));
-    }
-    //return the first appearence once char in current stringstream
-    public char FirstAppearingOnce()
-    {
-        Set<Map.Entry<Character, Boolean>> entries = map.entrySet();
-        for (Map.Entry<Character, Boolean> entry: entries) {
-            if (!entry.getValue()) return entry.getKey();
+        if (pNode == null) return null;
+
+        if (pNode.right != null) {
+            pNode = pNode.right;
+            while (pNode.left != null) {
+                pNode = pNode.left;
+            }
+            return pNode;
         }
-        throw new ValueException("error");
+
+        while (pNode.next != null) {
+            TreeLinkNode node = pNode.next;
+            if (node.left == pNode) {
+                return node;
+            }
+            pNode = pNode.next;
+        }
+        return null;
+    }
+
+
+    public ListNode deleteDuplication(ListNode pHead) {
+        ListNode sentinel = new ListNode(-1);
+        sentinel.next = pHead;
+        ListNode prev = sentinel;
+        ListNode curr = pHead;
+
+        while (curr != null) {
+            if (curr.next != null && curr.val == curr.next.val) {
+                while (curr.next != null && curr.val == curr.next.val) {
+                    curr = curr.next;
+                }
+                prev.next = curr;
+                curr = curr.next;
+            }
+            else {
+                prev = curr;
+                curr = curr.next;
+            }
+        }
+        return sentinel.next;
+    }
+
+    public ListNode EntryNodeOfLoop(ListNode pHead){
+        ListNode fast = pHead;
+        ListNode slow = pHead;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (slow == fast) break;
+        }
+        if (fast == null || fast.next == null) return null;
+        fast = pHead;
+        while (fast != slow) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return fast;
+    }
+
+    public class TreeLinkNode {
+        int val;
+        TreeLinkNode left = null;
+        TreeLinkNode right = null;
+        TreeLinkNode next = null;
+
+        TreeLinkNode(int val) {
+            this.val = val;
+        }
     }
 }
