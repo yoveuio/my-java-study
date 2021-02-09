@@ -6,9 +6,10 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.sctp.nio.NioSctpServerChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 import java.net.InetSocketAddress;
 
@@ -32,8 +33,11 @@ import java.net.InetSocketAddress;
 public class TimeServer {
 
     public void bind(int port) {
-        //NioEventLoopGroup是线程组，包含了一组NIO线程，专门用于网络事件的处理。实际上就是两个Reactor数组
-        //一个用于服务端接收客户端的连接
+        /* NioEventLoopGroup是线程组，包含了一组NIO线程
+         * 专门用于网络事件的处理、调度和执行客户端的接入、用户自定义任务和定时任务的执行。
+         * 实际上就是两个Reactor线程池
+         * */
+        // 一个用于服务端接收客户端的连接
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         //用于进行SocketChannel的网络读写
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -44,8 +48,13 @@ public class TimeServer {
         serverBootstrap.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
                 .localAddress(new InetSocketAddress(port))
+                // 指定内核为此套接口排队的最大连接个数
+                // 数据报在第一次握手与第三次握手之间处在未完成队列。当三路握手完成条目将从未完成队列调入连接队列尾部
+                // 当进程调用accept时，从已完成队列中的头部取出一个条目给进程，当已完成队列为空进程将睡眠。backlog被规定为两个队列总和的最大值
                 .option(ChannelOption.SO_BACKLOG, 1024)
-                //绑定IO时间处理器，类似于Reactor模式中的Handler类
+                // 为启动辅助类指定handler，用于从客户端接收数据
+                .handler(new LoggingHandler(LogLevel.INFO))
+                // 为启动复制类的父类指定handler。绑定IO时间处理器，类似于Reactor模式中的Handler类。
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
@@ -54,8 +63,8 @@ public class TimeServer {
                 });
 
         try {
-            //绑定端口，同步等待成功
-            //ChannelFuture的作用类似于java.util.concurrent.Future,主要用于异步操作的通知回调
+            // 绑定端口并启动服务
+            // ChannelFuture的作用类似于java.util.concurrent.Future,主要用于异步操作的通知回调
             ChannelFuture f = serverBootstrap.bind().sync();
             System.out.println("Server start listen at " + port);
             //等待服务端监听端口关闭
