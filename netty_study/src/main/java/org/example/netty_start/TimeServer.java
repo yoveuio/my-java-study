@@ -46,6 +46,10 @@ public class TimeServer {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         //对应ServerSocketChannel类
         serverBootstrap.group(bossGroup, workerGroup)
+                // 创建成功后将对其进行初始化，有以下三点
+                // 1.设置Socket参数和NioServerSocketChannel的附加属性
+                // 2.将AbstractBootStrap的Handler添加到NioServerSocketChannel的ChannelPipeline中
+                // 3.用于服务端注册的HandlerServerBootstrapAccept添加到ChannelPipeline中
                 .channel(NioServerSocketChannel.class)
                 .localAddress(new InetSocketAddress(port))
                 // 指定内核为此套接口排队的最大连接个数
