@@ -1,6 +1,7 @@
 package org.example;
 
-import org.example.leetcode.ListNode;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * @author yoveuio
@@ -10,77 +11,33 @@ import org.example.leetcode.ListNode;
  * @date 2021/1/9 9:20
  */
 class Solution {
-    public TreeLinkNode GetNext(TreeLinkNode pNode)
-    {
-        if (pNode == null) return null;
 
-        if (pNode.right != null) {
-            pNode = pNode.right;
-            while (pNode.left != null) {
-                pNode = pNode.left;
-            }
-            return pNode;
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] a = new int[]{5,2,3,4,1,6,7,0,8};
+        for (int j : a) {
+            solution.Insert(j);
+            System.out.println(solution.GetMedian());
         }
-
-        while (pNode.next != null) {
-            TreeLinkNode node = pNode.next;
-            if (node.left == pNode) {
-                return node;
-            }
-            pNode = pNode.next;
-        }
-        return null;
     }
 
+    Queue<Integer> max = new PriorityQueue<>((o1, o2) -> o2 - o1);
+    Queue<Integer> min = new PriorityQueue<>();
 
-    public ListNode deleteDuplication(ListNode pHead) {
-        ListNode sentinel = new ListNode(-1);
-        sentinel.next = pHead;
-        ListNode prev = sentinel;
-        ListNode curr = pHead;
-
-        while (curr != null) {
-            if (curr.next != null && curr.val == curr.next.val) {
-                while (curr.next != null && curr.val == curr.next.val) {
-                    curr = curr.next;
-                }
-                prev.next = curr;
-                curr = curr.next;
-            }
-            else {
-                prev = curr;
-                curr = curr.next;
-            }
+    public void Insert(Integer num) {
+        if (max.size() != min.size()) {
+            max.offer(num);
+            min.offer(max.poll());
         }
-        return sentinel.next;
+        else {
+            min.offer(num);
+            max.offer(min.poll());
+        }
     }
 
-    public ListNode EntryNodeOfLoop(ListNode pHead){
-        ListNode fast = pHead;
-        ListNode slow = pHead;
-
-        while (fast != null && fast.next != null) {
-            fast = fast.next.next;
-            slow = slow.next;
-            if (slow == fast) break;
-        }
-        if (fast == null || fast.next == null) return null;
-        fast = pHead;
-        while (fast != slow) {
-            fast = fast.next;
-            slow = slow.next;
-        }
-        return fast;
-    }
-
-    public class TreeLinkNode {
-        int val;
-        TreeLinkNode left = null;
-        TreeLinkNode right = null;
-        TreeLinkNode next = null;
-
-        TreeLinkNode(int val) {
-            this.val = val;
-        }
+    public Double GetMedian() {
+        if (max.size() == 0) return 0.0;
+        if (max.size() == min.size()) return (max.peek() + min.peek()) / 2.0;
+        else return 1.0 * max.peek();
     }
 }
