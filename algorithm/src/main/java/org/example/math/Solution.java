@@ -1,6 +1,8 @@
 package org.example.math;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author yoveuio
@@ -14,6 +16,87 @@ public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
         //solution.monotoneIncreasingDigits(10);
+        int[] nums = new int[]{1,-1,-1,0};
+        solution.threeSum(nums);
+        solution.sort(nums, 0, nums.length - 1);
+        System.out.println(Arrays.toString(nums));
+    }
+
+    /**
+     * 给你一个包含 n 个整数的数组nums，
+     * 判断nums中是否存在三个元素 a，b，c ，使得a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
+     *
+     * 注意：答案中不可以包含重复的三元组。
+     *
+     * 排序加双指针
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/3sum
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        if (nums == null || nums.length == 0) return new ArrayList<>();
+        List<List<Integer>> answers = new ArrayList<>();
+        int n = nums.length;
+
+        sort(nums, 0, n - 1);
+
+        for (int a = 0; a < n;) {
+            int b = a + 1, c = n - 1;
+            while (b < c) {
+                int x = nums[b];
+                int y = nums[c];
+                if (x + y == -nums[a]) {
+                    List<Integer> answer = new ArrayList<>();
+                    answer.add(nums[a]);
+                    answer.add(nums[b]);
+                    answer.add(nums[c]);
+                    answers.add(answer);
+                    b++;
+                    while (b < c && x == nums[b]) b++;
+                }
+                else if (x + y < -nums[a]) {
+                    b++;
+                    while (b < c && x == nums[b]) b++;
+                }
+                else if (x + y > -nums[a]) {
+                    c--;
+                    while (b < c && y == nums[c]) c--;
+                }
+            }
+            int i = a + 1;
+            while (i < n && nums[a] == nums[i]) i++;
+            a = i;
+        }
+        return answers;
+    }
+
+    private void sort(int[] nums, int lo, int hi) {
+        if (lo >= hi) return;
+        int j = partition(nums, lo, hi);
+        sort(nums, lo, j - 1);
+        sort(nums, j + 1, hi);
+    }
+
+    private int partition(int[] nums, int lo, int hi) {
+        int v = nums[lo];
+        int lt = lo, gt = hi + 1;
+        while (true) {
+            while (++lt <= hi && nums[lt] <= v);
+            while (--gt >= lo && nums[gt] > v);
+            if (lt >= gt) break;
+            swap(nums, lt, gt);
+        }
+        nums[lo] = nums[gt];
+        nums[gt] = v;
+        return gt;
+    }
+
+    private void swap(int[] nums, int lt, int gt) {
+        if (nums[lt] == nums[gt]) return ;
+        nums[lt] ^= nums[gt];
+        nums[gt] ^= nums[lt];
+        nums[lt] ^= nums[gt];
     }
 
     /**
