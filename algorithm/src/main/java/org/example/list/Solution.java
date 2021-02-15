@@ -15,6 +15,46 @@ import java.util.*;
 public class Solution {
 
     /**
+     * 23. 合并K个升序链表
+     *
+     * 给你一个链表数组，每个链表都已经按升序排列。
+     * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
+     *
+     * 优先队列，归并
+     * @param lists
+     * @return
+     */
+    public ListNode mergeKLists(ListNode[] lists) {
+        return merge(lists, 0, lists.length - 1);
+    }
+
+    private ListNode merge (ListNode[] lists, int l, int r) {
+        if (l == r) return lists[l];
+        if (l > r) return null;
+        int mid = (r - l >> 1) + l;
+        return mergeTwoList(merge(lists, l, mid), merge(lists, mid + 1, r));
+    }
+
+    private ListNode mergeTwoList(ListNode l1, ListNode l2) {
+        ListNode sentinel = new ListNode(-1);
+        ListNode curr = sentinel;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                curr.next = l1;
+                l1 = l1.next;
+            } else {
+                curr.next = l2;
+                l2 = l2.next;
+            }
+            curr = curr.next;
+        }
+
+        curr.next = l1 == null ? l2 : l1;
+        return sentinel.next;
+    }
+
+    /**
      * LC160. 相交链表
      * 编写一个程序，找到两个单链表相交的起始节点。
      *

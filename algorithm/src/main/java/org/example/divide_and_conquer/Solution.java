@@ -4,7 +4,7 @@ import org.example.leetcode.ListNode;
 
 /**
  * @ClassName Solution
- * @Description TODO
+ * @Description 分治
  * @Author yoveuio
  * @Date 2020/10/12 16:33
  * @Version 1.0
