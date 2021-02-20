@@ -7,6 +7,7 @@ package org.example.dp;
  * @Date 2020/10/26 8:47
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     /**
@@ -58,8 +59,6 @@ public class Solution {
 
     /**
      * 青蛙跳台阶
-     * @param n
-     * @return
      */
     public int numWays(int n) {
         int a = 1, b = 1, sum;

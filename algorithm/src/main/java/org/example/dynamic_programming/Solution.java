@@ -7,14 +7,8 @@ package org.example.dynamic_programming;
  * @Date 2020/11/9 19:25
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Solution {
-
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        String num = solution.longestPalindrome("aaaa");
-        System.out.println(num);
-    }
-
     /**
      * 5. 最长回文子串
      * @param s 给你一个字符串 s，找到 s 中最长的回文子串
@@ -262,8 +256,6 @@ public class Solution {
      *
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii
-     * @param prices
-     * @return
      */
     public int maxProfit3(int[] prices) {
         if(prices==null || prices.length==0) {

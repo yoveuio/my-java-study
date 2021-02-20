@@ -9,6 +9,7 @@ import io.netty.buffer.*;
  * @description netty源码解析
  * @date 2021/2/15 18:52
  */
+@SuppressWarnings("unused")
 public class Main {
     static ByteBuf byteBuf = Unpooled.buffer();
 
@@ -29,6 +30,11 @@ public class Main {
      * 相比于`PooledHeapByteBuf`，其实现原理更加简单，也不容易出现内存管理方面的问题。
      */
     private UnpooledHeapByteBuf unpooledHeapByteBuf;
+
+    /**
+     * 分配器
+     */
+    private ByteBufAllocator allocator;
 
     public static void main(String[] args) {
         byteBuf.writeInt(1);

@@ -11,15 +11,10 @@ import java.util.List;
  * @description 数学题
  * @date 2020/12/12 17:00
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        //solution.monotoneIncreasingDigits(10);
-        int[] nums = new int[]{1,-1,-1,0};
-        solution.threeSum(nums);
-        solution.sort(nums, 0, nums.length - 1);
-        System.out.println(Arrays.toString(nums));
     }
 
     /**
@@ -31,8 +26,6 @@ public class Solution {
      * 排序加双指针
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/3sum
-     * @param nums
-     * @return
      */
     public List<List<Integer>> threeSum(int[] nums) {
         if (nums == null || nums.length == 0) return new ArrayList<>();
@@ -78,6 +71,7 @@ public class Solution {
         sort(nums, j + 1, hi);
     }
 
+    @SuppressWarnings("all")
     private int partition(int[] nums, int lo, int hi) {
         int v = nums[lo];
         int lt = lo, gt = hi + 1;

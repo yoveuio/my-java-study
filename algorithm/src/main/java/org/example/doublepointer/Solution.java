@@ -11,6 +11,7 @@ import java.util.Arrays;
  * @Date 2020/9/19 9:11
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     public static void main(String[] args) {
@@ -91,11 +92,9 @@ public class Solution {
      * right++;
      * }
      * }
-     *
-     * @param nums
      */
     public void moveZeroes(int[] nums) {
-        int zero = 0, notZero = 0;
+        int zero, notZero = 0;
         int len = nums.length;
         while (true) {
             while (nums[notZero] != 0 && notZero <= len - 1) notZero++;
@@ -138,13 +137,12 @@ public class Solution {
     /**
      * 通过双指针删除排序数组中重复元素
      */
-    public int[] remElement(int[] arr, int index) {
+    public void remElement(int[] arr, int index) {
 
-        for (int i = index + 1; i < arr.length; i++) {
-            arr[i - 1] = arr[i];
-        }
+        if (arr.length - index + 1 >= 0)
+            System.arraycopy(arr, index + 1, arr,
+                    index + 1 - 1, arr.length - index + 1);
 
-        return arr;
     }
 
     public int removeDuplicates(int[] nums) {

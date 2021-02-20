@@ -11,6 +11,7 @@ import java.util.Deque;
  * @description 单调栈题目
  * @date 2020/12/17 17:07
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     public static void main(String[] args) {

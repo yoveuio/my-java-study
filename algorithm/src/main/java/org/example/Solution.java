@@ -16,6 +16,43 @@ import java.util.*;
 class Solution {
 
     /**
+     * 121. 买卖股票的最佳时机
+     */
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+        int sell = 0, buy = -prices[0];
+
+        for (int price : prices) {
+            buy = Math.max(buy, -price);
+            sell = Math.max(sell, buy + price);
+        }
+
+        return sell;
+    }
+
+    /**
+     * 20. 有效的括号
+     * @param s 括号组成的字符串
+     * @return 返回是否是有效的括号
+     */
+    public boolean isValid(String s) {
+        if ((s.length() & 1) != 0) return false;
+        Map<Character, Character> map = new HashMap<Character, Character>() {{
+            put('}', '{');
+            put(']', '[');
+            put(')', '(');
+        }};
+        Deque<Character> stack = new ArrayDeque<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!map.containsKey(c)) stack.push(c);
+            else if (map.get(c) != stack.poll()) return false;
+        }
+
+        return stack.isEmpty();
+    }
+
+    /**
      * LRUCache的设计
      */
     static class LRUCache {
