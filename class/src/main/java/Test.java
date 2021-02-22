@@ -1,54 +1,77 @@
-import java.io.*;
-import java.nio.charset.Charset;
-import java.util.*;
+import java.net.*;
+import java.util.Enumeration;
 
 /**
  * @ClassName Test
- * @Description TODO
+ * @Description 测试类
  * @Author yoveuio
  * @Date 2020/8/30 13:18
  * @Version 1.0
  */
-public class Test{
+@SuppressWarnings("unused")
+public class Test {
 
-    ThreadLocal<Integer> local = new ThreadLocal<>();
+    public static void main(String[] args) {
 
-    public static <E extends Number> List<? super E> process(List<E> list) {
-        return list;
+        System.out.println(getHostIp());
+
     }
 
-    public static void main(String[] args) throws IOException {
+    private static String getIp() throws UnknownHostException {
+        InetAddress addr = InetAddress.getLocalHost();
+        System.out.println("Local HostAddress: " +
+                addr.getHostAddress());
+        String hostname = addr.getHostName();
+        System.out.println("Local host name: " + hostname);
+        return hostname;
+    }
+
+    /**
+     * 获取非127.0.0.1的本机地址
+     */
+    private static String getHostIp() {
         try {
-            Thread.currentThread().wait();
-        } catch (InterruptedException e) {
+            // 枚举所有网络接口
+            Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (allNetInterfaces.hasMoreElements()) {
+                NetworkInterface netInterface = allNetInterfaces.nextElement();
+                Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress ip = addresses.nextElement();
+                    System.out.println(ip.getHostAddress());
+                    if (ip instanceof Inet4Address
+                            && !ip.isLoopbackAddress() //loopback地址即本机地址，IPv4的loopback范围是127.0.0.0 ~ 127.255.255.255
+                            && !ip.getHostAddress().contains(":")) {
+                        System.out.println("本机的IP = " + ip.getHostAddress());
+                        return ip.getHostAddress();
+                    }
+                }
+            }
+        } catch (Exception e){
             e.printStackTrace();
         }
-        Properties properties = new Properties();
-        Writer writer = new FileWriter("hello.txt");
-
-
-        properties.setProperty("hello", "hello world!");
-        properties.setProperty("1", "I am fine!");
-        properties.setProperty("2", "How are you?");
-
-        properties.store(writer, "hello");
-
-        InputStream input = new FileInputStream("hello.txt");
-        PrintStream printStream = new PrintStream("hello.txt");
-        OutputStream output = new FileOutputStream("hello.txt");
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(output, Charset.forName("GBK"));
-        properties.list(printStream);
-        Set<String> strings = properties.stringPropertyNames();
-        for (String string : strings) {
-            System.out.println(string);
-        }
-        Enumeration<?> enumeration = properties.propertyNames();
-        while(enumeration.hasMoreElements()) {
-            System.out.println(properties.getProperty((String) enumeration.nextElement()));
-        }
-
-
+        return null;
     }
 
+    private static String getHost() throws SocketException {
+        Enumeration<NetworkInterface> nifs = NetworkInterface.getNetworkInterfaces();
 
+        while (nifs.hasMoreElements()) {
+            NetworkInterface nif = nifs.nextElement();
+
+            // 获得与该网络接口绑定的 IP 地址，一般只有一个
+            Enumeration<InetAddress> addresses = nif.getInetAddresses();
+            while (addresses.hasMoreElements()) {
+                InetAddress addr = addresses.nextElement();
+
+                if (addr instanceof Inet4Address) { // 只关心 IPv4 地址
+                    System.out.println("网卡接口名称：" + nif.getName());
+                    System.out.println("网卡接口地址：" + addr.getHostAddress());
+                    System.out.println();
+                    return addr.getHostAddress();
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -1,6 +1,9 @@
 package org.example.netty;
 
 import io.netty.buffer.*;
+import io.netty.channel.AbstractChannel;
+import io.netty.channel.Channel;
+
 
 /**
  * @author yoveuio
@@ -35,6 +38,16 @@ public class Main {
      * 分配器
      */
     private ByteBufAllocator allocator;
+
+    /**
+     * Channel抽象类，抽象了多种功能
+     */
+    private Channel channel;
+
+    /**
+     * 采用聚合的方式封装了各种功能
+     */
+    private AbstractChannel abstractChannel;
 
     public static void main(String[] args) {
         byteBuf.writeInt(1);
