@@ -51,6 +51,12 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.2.6.RELEASE</version>
+        </dependency>
+
         <!--spring aop + aspectj-->
         <dependency>
             <groupId>org.springframework</groupId>

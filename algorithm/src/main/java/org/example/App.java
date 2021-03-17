@@ -15,8 +15,6 @@ public class App {
 
     /**
      * LC1046. 最后一块石头的重量
-     * @param stones
-     * @return
      */
     public int lastStoneWeight(int[] stones) {
         if (stones.length < 1) return 0;

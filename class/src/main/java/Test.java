@@ -1,5 +1,7 @@
 import java.net.*;
 import java.util.Enumeration;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @ClassName Test
@@ -10,9 +12,9 @@ import java.util.Enumeration;
  */
 @SuppressWarnings("unused")
 public class Test {
-
     public static void main(String[] args) {
-
+        Executors.newFixedThreadPool(5);
+        ReentrantReadWriteLock lock;
         System.out.println(getHostIp());
 
     }

@@ -1,7 +1,6 @@
 package org.example.graph;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @ClassName Solution
@@ -10,7 +9,56 @@ import java.util.Queue;
  * @Date 2020/11/19 19:16
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Solution {
+
+    public int orangesRotting(int[][] grid) {
+        int count = 0;
+        final int[][] forward = new int[][] {
+                {1, 0},
+                {0, 1},
+                {-1, 0},
+                {0, -1}};
+        if (grid == null || grid.length == 0) return -1;
+        class Point {
+            final int x;
+            final int y;
+
+            public Point(int x, int y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+        Deque<Point> deque = new LinkedList<>();
+        int n = grid.length, m = grid[0].length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 2) deque.add(new Point(i, j));
+                else if (grid[i][j] == 1) count++;
+            }
+        }
+        if (count == 0 ) return 0;
+
+        int ans = 0;
+        while (!deque.isEmpty()) {
+            for (int i = deque.size(); i > 0; i--) {
+                Point point = deque.poll();
+                for (int j = 0; j < 4; j++) {
+                    assert point != null;
+                    int x = point.x + forward[j][0];
+                    int y = point.y + forward[j][1];
+                    if (x >= 0 && y >= 0 && x < n && y < m && grid[x][y] == 1) {
+                        deque.add(new Point(x, y));
+                        grid[x][y] = 2;
+                        count--;
+                    }
+                }
+            }
+            ans++;
+        }
+        return count == 0 ? ans - 1 : -1;
+    }
+
 
     /**
      * LC48 旋转图像

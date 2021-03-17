@@ -7,6 +7,7 @@ package org.example.dichotomize;
  * @Date 2020/11/30 9:50
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     /**
@@ -28,11 +29,9 @@ public class Solution {
         return i;
     }
     /**
-     *
-     *
      * @param nums 排序数组
      * @param target 目标值
-     * @return 目标值的上界和下界, int[min][max]
+     * @return 目标值的上界和下界, int[]{min, max}
      */
     public int[] searchRange(int[] nums, int target) {
         int leftIdx = binarySearch(nums, target, true);
@@ -47,7 +46,7 @@ public class Solution {
         int left = 0, right = nums.length - 1, ans = nums.length;
         while (left <= right) {
             int mid = (left + right) / 2;
-            if (nums[mid] > target || (lower && nums[mid] >= target)) {
+            if (nums[mid] > target || (lower && nums[mid] == target)) {
                 right = mid - 1;
                 ans = mid;
             } else {
