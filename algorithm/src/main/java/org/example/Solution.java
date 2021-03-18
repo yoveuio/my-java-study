@@ -31,6 +31,66 @@ class Solution {
         Arrays.stream(ints).filter(i -> i > 0).forEach(System.out::println);
     }
 
+    public static class Codec {
+        public static void main(String[] args) {
+            Codec codec = new Codec();
+            String serialize = codec.serialize(new TreeNode(1) {{
+                left = new TreeNode(2);
+                right = new TreeNode(3) {{
+                    left = new TreeNode(4);
+                    right = new TreeNode(5);
+                }};
+            }});
+            System.out.println(serialize);
+            codec.deserialize(serialize);
+        }
+
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            Queue<TreeNode> queue = new LinkedList<>();
+            StringBuilder b = new StringBuilder();
+            queue.add(root);
+
+            while (!queue.isEmpty()){
+                TreeNode node = queue.poll();
+                if (node == null) {
+                    b.append("null").append('!');
+                    continue;
+                }
+                b.append(node.val).append('!');
+                queue.add(node.left);
+                queue.add(node.right);
+            }
+            return b.toString();
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            final String NULLString = "null";
+            String[] s = data.split("!");
+            if (s.length == 1 && NULLString.equals(s[0])) return null;
+            TreeNode root = new TreeNode(Integer.parseInt(s[0]));
+
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.add(root);
+            int index = 1;
+            while (!queue.isEmpty()) {
+                TreeNode node = queue.poll();
+                if (!NULLString.equals(s[index])) {
+                    node.left = new TreeNode(Integer.parseInt(s[index]));
+                    queue.add(node.left);
+                }
+                index++;
+                if (!NULLString.equals(s[index])) {
+                    node.right = new TreeNode(Integer.parseInt(s[index]));
+                    queue.add(node.right);
+                }
+                index++;
+            }
+            return root;
+        }
+    }
+
     /**
      * 287. 寻找重复数
      */

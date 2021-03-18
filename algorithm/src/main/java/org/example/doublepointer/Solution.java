@@ -2,7 +2,10 @@ package org.example.doublepointer;
 
 import org.example.leetcode.ListNode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @ClassName Solution
@@ -18,11 +21,42 @@ public class Solution {
 
     }
 
+    /**
+     *
+     * @param nums
+     */
+    public void sortColors(int[] nums) {
+
+    }
+
     public void swap(int[] nums, int i, int j) {
         if (i == j) return;
         nums[i] ^= nums[j];
         nums[j] ^= nums[i];
         nums[i] ^= nums[j];
+    }
+
+    /**
+     * 56. 合并区间
+     */
+    public int[][] merge(int[][] intervals) {
+        int n = intervals.length;
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
+        List<int[]> list = new ArrayList<>();
+
+        for (int i = 0; i < n; ) {
+            int l = intervals[i][0], r = intervals[i][1];
+            while (++i < n && r >= intervals[i][0]) {
+                r = Math.max(intervals[i][1], r);
+            }
+            list.add(new int[]{l, r});
+        }
+        int[][] answer= new int[list.size()][];
+        int index = 0;
+        for (int[] ints: list) {
+            answer[index++] = ints;
+        }
+        return answer;
     }
 
     /**

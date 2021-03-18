@@ -9,10 +9,41 @@ import java.util.*;
  * @description 回溯
  * @date 2020/12/14 9:45
  */
+@SuppressWarnings("unused")
 public class Solution {
+    List<String> stringListAnswer;
+
+    /**
+     * 22. 括号生成
+     */
+    public List<String> generateParenthesis(int n) {
+        stringListAnswer = new ArrayList<>();
+        StringBuilder b = new StringBuilder();
+        _generateParenthesis(b, n, 0, 0);
+        return stringListAnswer;
+    }
+
+    private void _generateParenthesis(StringBuilder b, int n, int left, int right) {
+        if (b.length() == n * 2) {
+            stringListAnswer.add(b.toString());
+            return ;
+        }
+
+        if (left < n) {
+            b.append('(');
+            _generateParenthesis(b, n, left + 1, right);
+            b.deleteCharAt(b.length() - 1);
+        }
+
+        if (right < left) {
+            b.append(')');
+            _generateParenthesis(b, n, left, right + 1);
+            b.deleteCharAt(b.length() - 1);
+        }
+    }
 
     public List<String> letterCombinations(String digits) {
-        List<String> combinations = new ArrayList<String>();
+        List<String> combinations = new ArrayList<>();
         if (digits.length() == 0) {
             return combinations;
         }
@@ -76,7 +107,7 @@ public class Solution {
     }
 
     public List<String> generateBoard(int[] queens, int n) {
-        List<String> board = new ArrayList<String>();
+        List<String> board = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             char[] row = new char[n];
             Arrays.fill(row,    '.');

@@ -9,6 +9,86 @@ package org.example.dynamic_programming;
  */
 @SuppressWarnings("unused")
 public class Solution {
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        boolean aa = solution.isMatch("aa", "a*");
+        System.out.println(aa);
+    }
+
+    /**
+     * 72. 编辑距离
+     */
+    public int minDistance(String word1, String word2) {
+        int n = word1.length();
+        int m = word2.length();
+        int[][] dp = new int[n + 1][m + 1];
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = i;
+        }
+        for (int j = 0; j <= m; j++) {
+            dp[0][j] = j;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = Math.min(dp[i - 1][j - 1] - 1, Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                }
+                else {
+                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                }
+            }
+        }
+        return dp[n][m];
+    }
+
+    /**
+     * 55. 跳跃游戏
+     */
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+
+        int step = 0;
+        for (int i = 0; i < n; i++) {
+            step = Math.max(step, nums[i] + i);
+            if (step < i || (step == i && i != n - 1)) return false;
+        }
+        return true;
+    }
+
+    /**
+     * 10. 正则表达式匹配
+     */
+    public boolean isMatch(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+
+        boolean[][] dp = new boolean[n + 1][m + 1];
+        dp[0][0] = true;
+        // i = 0是 p = "a*"这样，通配符出现在第二个的做准备
+        for (int i = 0; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (p.charAt(j - 1) == '*') {
+                    dp[i][j] = dp[i][j - 2];
+                    if (match(s, p, i - 1, j - 2)) {
+                        dp[i][j] = dp[i][j] | dp[i - 1][j];
+                    }
+                }
+                else if (match(s, p, i - 1, j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+            }
+        }
+        return dp[n][m];
+    }
+
+    public boolean match(String s, String p, int i, int j) {
+        if (i < 0) return false;
+        if (p.charAt(j) == '.') return true;
+        return s.charAt(i) == p.charAt(j);
+    }
+
     /**
      * 5. 最长回文子串
      * @param s 给你一个字符串 s，找到 s 中最长的回文子串
