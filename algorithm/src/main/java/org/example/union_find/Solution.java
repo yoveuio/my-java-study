@@ -1,8 +1,6 @@
 package org.example.union_find;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author yoveuio
@@ -11,17 +9,16 @@ import java.util.List;
  * @description 并查集
  * @date 2021/1/7 17:07
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     public static void main(String[] args) {
         List<Node> nodes = new ArrayList<>();
-        UnionFind unionFind = new UnionFind();
-        unionFind.makeUnion(nodes);
         for (int i = 0; i < 41; i++) {
             nodes.add(new Node(i));
         }
 
-        unionFind.makeUnion(nodes);
+        UnionFind<Node> unionFind = new UnionFind<>(nodes);
         for (int i = 1; i < 41; i++) {
             unionFind.union(nodes.get(i), nodes.get(i - 1));
         }
@@ -49,41 +46,40 @@ public class Solution {
         }
     }
 
-    public static class UnionFind{
-        public HashMap<Node, Node> fatherMap;
-        public HashMap<Node, Integer> sizeMap;
+    public static class UnionFind<T>{
+        private final HashMap<T, T> fatherMap;
+        private final HashMap<T, Integer> sizeMap;
+
 
         public UnionFind() {
             fatherMap = new HashMap<>();
             sizeMap = new HashMap<>();
         }
 
-        public void makeUnion(List<Node> nodes) {
-            fatherMap.clear();
-            sizeMap.clear();
-
-            for (Node node: nodes) {
+        public UnionFind (Collection<T> collection) {
+            this();
+            for (T node : collection) {
                 fatherMap.put(node, node);
                 sizeMap.put(node, 1);
             }
         }
 
-        private Node find(Node node) {
-            Node father = fatherMap.get(node);
+        private T find(T node) {
+            T father = fatherMap.get(node);
             if (father == node) return father;
             father = find(father);
             fatherMap.put(node, father);
             return father;
         }
 
-        public boolean isUnion(Node aNode, Node bNode) {
+        public boolean isUnion(T aNode, T bNode) {
             return find(aNode) == find(bNode);
         }
 
-        public void union(Node aNode, Node bNode) {
+        public void union(T aNode, T bNode) {
             if (aNode == null || bNode == null) return;
-            Node aHead = find(aNode);
-            Node bHead = find(bNode);
+            T aHead = find(aNode);
+            T bHead = find(bNode);
 
             if (aHead != bHead) {
                 int aSize = sizeMap.get(aHead);

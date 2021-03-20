@@ -11,6 +11,22 @@ import org.example.leetcode.ListNode;
  */
 @SuppressWarnings("unused")
 public class Solution {
+    static class ParkingSystem {
+        int[] all;
+        int[] res;
+
+        public ParkingSystem(int big, int medium, int small) {
+            all = new int[]{big, medium, small};
+            res = new int[3];
+        }
+
+        public boolean addCar(int carType) {
+            if (res[carType] < all[carType]) return false;
+            res[carType]++;
+            return true;
+        }
+    }
+
     public ListNode reverseBetween(ListNode head, int left, int right) {
         ListNode sentinel = new ListNode(-1);
         sentinel.next = head;

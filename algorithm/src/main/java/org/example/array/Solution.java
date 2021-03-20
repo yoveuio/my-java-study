@@ -9,6 +9,7 @@ import java.util.*;
  * @Date 2020/10/14 18:56
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     public static void main(String[] args) {
@@ -22,7 +23,6 @@ public class Solution {
         nums[x] ^= nums[y];
     }
     /* ------------------------------------------------分割线--------------------------------------------------- */
-
 
     /**
      * 旋转数组
@@ -104,8 +104,6 @@ public class Solution {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/gou-jian-cheng-ji-shu-zu-lcof
      *
-     * @param a
-     * @return
      */
     public int[] constructArr(int[] a) {
         if (a == null || a.length < 1) return new int[]{};
@@ -135,6 +133,7 @@ public class Solution {
      * @param s 能分配的饼干
      * @return 返回能满足的孩子的数量
      */
+    @SuppressWarnings("all")
     public int findContentChildren(int[] g, int[] s) {
         Arrays.sort(g);
         Arrays.sort(s);
@@ -430,6 +429,7 @@ public class Solution {
         }
     }
 
+    @SuppressWarnings("all")
     public void reverse(int[] nums, int start) {
         int left = start, right = nums.length - 1;
         while (left < right) {

@@ -12,11 +12,11 @@ import java.util.*;
  * @Date 2020/10/18 10:04
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        solution.verifyPostorder(new int[]{4, 6, 7, 5});
     }
     /* -------------------------------常量区---------------------------------------- */
     TreeNode ansTree;
@@ -24,8 +24,6 @@ public class Solution {
     /**
      * LC226. 翻转二叉树
      * 翻转一棵二叉树。
-     * @param root
-     * @return
      */
     public TreeNode invertTree(TreeNode root) {
         if (root == null) return null;
@@ -58,6 +56,7 @@ public class Solution {
         return ansTree;
     }
 
+    @SuppressWarnings("all")
     private boolean lowestCommonAncestorHandler(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) return false;
         boolean lson = lowestCommonAncestorHandler(root.left, p, q);
@@ -97,8 +96,6 @@ public class Solution {
      * 剑指 Offer 55 - II. 平衡二叉树
      * 输入一棵二叉树的根节点，判断该树是不是平衡二叉树。
      * 如果某二叉树中任意节点的左右子树的深度相差不超过1，那么它就是一棵平衡二叉树。
-     * @param root
-     * @return
      */
     public boolean isBalanced(TreeNode root) {
         return isBalancedHandler(root) != -1;
@@ -230,6 +227,7 @@ public class Solution {
         return verifyPostorderHandler(postorder, 0, postorder.length-1);
     }
 
+    @SuppressWarnings("all")
     private boolean verifyPostorderHandler(int[] postorder, int start, int root) {
         if (start >= root) return true;
         int i = start - 1;
@@ -357,7 +355,7 @@ public class Solution {
      */
     public List<List<Integer>> levelOrder3(TreeNode root) {
 
-        Map<String, Map<String, String>> map = new HashMap();
+        Map<String, Map<String, String>> map = new HashMap<>();
 
         Queue<TreeNode> queue = new LinkedList<>();
         List<List<Integer>> res = new ArrayList<>();
@@ -366,6 +364,7 @@ public class Solution {
             LinkedList<Integer> tmp = new LinkedList<>();
             for (int i = queue.size(); i > 0; i--) {
                 TreeNode node = queue.poll();
+                assert node != null;
                 if (res.size() % 2 == 0) tmp.addLast(node.val); // 偶数层 -> 队列头部
                 else tmp.addFirst(node.val); // 奇数层 -> 队列尾部
                 if (node.left != null) queue.add(node.left);
@@ -387,6 +386,7 @@ public class Solution {
             List<Integer> tmp = new ArrayList<>();
             for (int i = queue.size(); i > 0; i--) {
                 TreeNode node = queue.poll();
+                assert node != null;
                 tmp.add(node.val);
                 if (node.left != null) queue.add(node.left);
                 if (node.right != null) queue.add(node.right);

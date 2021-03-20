@@ -13,6 +13,23 @@ import java.util.*;
 public class Solution {
     List<String> stringListAnswer;
 
+    List<Integer> t = new ArrayList<>();
+    List<List<Integer>> ans = new ArrayList<>();
+
+    public List<List<Integer>> subsets(int[] nums) {
+        int n = nums.length;
+        for (int mask = 0; mask < (1 << n); ++mask) {
+            t.clear();
+            for (int i = 0; i < n; ++i) {
+                if ((mask & (1 << i)) != 0) {
+                    t.add(nums[i]);
+                }
+            }
+            ans.add(new ArrayList<>(t));
+        }
+        return ans;
+    }
+
     /**
      * 22. 括号生成
      */

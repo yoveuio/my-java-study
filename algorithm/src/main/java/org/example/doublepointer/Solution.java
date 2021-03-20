@@ -22,11 +22,25 @@ public class Solution {
     }
 
     /**
-     *
-     * @param nums
+     * 颜色分类
      */
+    @SuppressWarnings("all")
     public void sortColors(int[] nums) {
+        int i = -1, j = nums.length, k = nums.length;
+        while (true) {
+            while (++i < j && nums[i] == 0);
+            while (--j > i && nums[j] != 0);
+            if (i >= j) break;
+            swap(nums, i, j);
+        }
 
+        j = i - 1;
+        while (true) {
+            while (++j < k && nums[j] == 1);
+            while (--k > j && nums[k] > 1);
+            if (j >= k) break;
+            swap(nums, j, k);
+        }
     }
 
     public void swap(int[] nums, int i, int j) {
