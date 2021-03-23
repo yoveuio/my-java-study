@@ -20,7 +20,7 @@ class Solution {
      */
     public static void main(String[] args) {
         Solution solution = new Solution();
-        boolean flag = solution.searchMatrix(new int[][]{{1, 1}}, 3);
+        int i1 = solution.evalRPN(new String[]{"4", "13", "5", "/", "+"});
         List<Integer> list = new ArrayList<Integer>() {{
             add(1);
             add(2);
@@ -31,20 +31,39 @@ class Solution {
         Arrays.stream(ints).filter(i -> i > 0).forEach(System.out::println);
     }
 
-    public static class Codec {
-        public static void main(String[] args) {
-            Codec codec = new Codec();
-            String serialize = codec.serialize(new TreeNode(1) {{
-                left = new TreeNode(2);
-                right = new TreeNode(3) {{
-                    left = new TreeNode(4);
-                    right = new TreeNode(5);
-                }};
-            }});
-            System.out.println(serialize);
-            codec.deserialize(serialize);
+    public int evalRPN(String[] tokens){
+        Set<String> set = new HashSet<String>(){{
+            add("+");
+            add("-");
+            add("*");
+            add("/");
+        }};
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (String s: tokens) {
+            if (!set.contains(s)) {
+                stack.push(Integer.parseInt(s));
+            } else {
+                stack.push(getResult(stack.pop(), stack.pop(), s));
+            }
         }
+        return stack.isEmpty() ? 0 : stack.pop();
+    }
 
+    private int getResult(int a, int b, String operate){
+        switch (operate) {
+            case "+":
+                return b + a;
+            case "-":
+                return b - a;
+            case "*":
+                return b * a;
+            case "/":
+                return b / a;
+        }
+        return -1;
+    }
+
+    public static class Codec {
         // Encodes a tree to a single string.
         public String serialize(TreeNode root) {
             Queue<TreeNode> queue = new LinkedList<>();

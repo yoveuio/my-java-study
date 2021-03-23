@@ -30,6 +30,7 @@ public class Solution {
         return ans;
     }
 
+
     /**
      * 22. 括号生成
      */

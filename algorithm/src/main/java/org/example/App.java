@@ -1,33 +1,76 @@
 package org.example;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Hello world!
  */
 public class App {
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num: nums) {
+            set.add(num);
+        }
 
-    public static void main(String[] args) {
-        App app = new App();
-
+        UnionFind union = new UnionFind(set);
+        for (int num: nums) {
+            if (set.contains(num - 1) && !union.isUnion(num, num - 1)) union.union(num, num - 1);
+        }
+        return union.getMaxLength();
     }
 
-    /**
-     * LC1046. 最后一块石头的重量
-     */
-    public int lastStoneWeight(int[] stones) {
-        if (stones.length < 1) return 0;
-        Queue<Integer> queue = new PriorityQueue<>((x1, x2)-> x2 - x1);
-        for (int stone: stones) {
-            queue.offer(stone);
+    static class UnionFind {
+        Map<Integer, Integer> parent;
+        Map<Integer, Integer> size;
+
+        UnionFind(Collection<Integer> collection) {
+            parent = new HashMap<>();
+            size = new HashMap<>();
+            for (int i: collection) {
+                parent.put(i, i);
+                size.put(i, 1);
+            }
         }
 
-        while (queue.size() > 1) {
-            int a = queue.poll();
-            int b = queue.poll();
-            if (a != b) queue.offer(a - b);
+        private int find(int i) {
+            int father = parent.get(i);
+            if (i == father) return father;
+            father = find(father);
+            parent.put(i, father);
+            return father;
         }
-        return queue.isEmpty() ? 0 : queue.peek();
+
+        public void union(int i, int j) {
+            i = find(i);
+            j = find(j);
+            if (i != j) {
+                int iSize = size.get(i);
+                int jSize = size.get(j);
+                if (iSize < jSize) {
+                    parent.put(i, j);
+                    size.put(i, iSize + jSize);
+                } else {
+                    parent.put(j, i);
+                    size.put(j, iSize + jSize);
+                }
+            }
+        }
+
+        public boolean isUnion(int i, int j) {
+            return find(i) == find(j);
+        }
+
+        public int getMaxLength() {
+            Map<Integer, Integer> length = new HashMap<>();
+            Set<Integer> keys = parent.keySet();
+            int ans = 0;
+            for (int key: keys) {
+                int father = find(key);
+                int fatherLength = length.getOrDefault(father, 0) + 1;
+                length.put(father, fatherLength);
+                ans = Math.max(ans, fatherLength);
+            }
+            return ans;
+        }
     }
 }

@@ -17,6 +17,15 @@ public class Solution {
     public static void main(String[] args) {
     }
 
+    public int hammingWeight(int n) {
+        int count = 0;
+        while (n != 0) {
+            n &= n - 1;
+            count++;
+        }
+        return count;
+    }
+
     /**
      * 给你一个包含 n 个整数的数组nums，
      * 判断nums中是否存在三个元素 a，b，c ，使得a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。

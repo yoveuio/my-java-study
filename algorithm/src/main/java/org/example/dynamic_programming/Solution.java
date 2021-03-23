@@ -1,5 +1,9 @@
 package org.example.dynamic_programming;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @ClassName Solution
  * @Description 动态规划系列题目
@@ -14,6 +18,20 @@ public class Solution {
         Solution solution = new Solution();
         boolean aa = solution.isMatch("aa", "a*");
         System.out.println(aa);
+    }
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int n = s.length();
+        Set<String> set = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n + 1; j++) {
+                if (!dp[i]) break;
+                if (set.contains(s.substring(i, j))) dp[j] = true;
+            }
+        }
+        return dp[n];
     }
 
     /**
