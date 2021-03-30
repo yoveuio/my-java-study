@@ -1,9 +1,6 @@
 package org.example.stack;
 
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName Solution
@@ -13,6 +10,25 @@ import java.util.Map;
  * @Version 1.0
  */
 public class Solution {
+
+    public boolean find132pattern(int[] nums) {
+        int n = nums.length;
+        Deque<Integer> stack = new ArrayDeque<>();
+        int max = Integer.MIN_VALUE;
+        stack.push(nums[nums.length - 1]);
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i] < max) {
+                return true;
+            }
+            while (!stack.isEmpty() && stack.peek() < nums[i]) {
+                max = stack.pop();
+            }
+            if (nums[i] > max) {
+                stack.push(nums[i]);
+            }
+        }
+        return false;
+    }
 
     /**
      *

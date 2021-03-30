@@ -10,11 +10,23 @@ import java.util.*;
  * @Date 2020/10/21 19:03
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        solution.permutation("abc");
+    }
+
+    /**
+     * 58. 最后一个单词的长度
+     */
+    @SuppressWarnings("all")
+    public int lengthOfLastWord(String s) {
+        s = s.trim();
+        int n = s.length();
+        int i = n - 1;
+        while (--i >= 0 && s.charAt(i) != ' ');
+        return n - i;
     }
 
     /**
@@ -133,10 +145,6 @@ public class Solution {
      * 请找出在 t 中被添加的字母。
      * <p>
      * https://leetcode-cn.com/problems/find-the-difference/submissions/
-     *
-     * @param s
-     * @param t
-     * @return
      */
     public char findTheDifference(String s, String t) {
         int res = 0;
@@ -155,9 +163,6 @@ public class Solution {
      * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof
-     *
-     * @param s
-     * @return
      */
     public String reverseWords(String s) {
         s = s.trim(); // 删除首尾空格
@@ -171,8 +176,6 @@ public class Solution {
         }
         return res.toString().trim(); // 转化为字符串并返回
     }
-
-    ;
 
     private void swap(String[] s, int i, int j) {
         String temp = s[i];
@@ -264,9 +267,6 @@ public class Solution {
     /**
      * LC387. 字符串中的第一个唯一字符
      * 给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
-     *
-     * @param s
-     * @return
      */
     public int firstUniqChar2(String s) {
         if (s == null || s.length() == 0) return -1;
@@ -286,9 +286,6 @@ public class Solution {
 
     /**
      * 打印出字符串中字符所有的排列，不能有重复元素
-     *
-     * @param s 给定字符串
-     * @return 任意顺序的一个排列
      */
     List<String> answer = new LinkedList<>();
     HashMap<Character, Integer> mapS = new HashMap<>();
@@ -298,7 +295,7 @@ public class Solution {
             mapS.put(c, mapS.getOrDefault(c, 0) + 1);
         }
         permutationHandler("", s.length());
-        return answer.toArray(new String[answer.size()]);
+        return answer.toArray(new String[0]);
     }
 
     private void permutationHandler(String s, int size) {
@@ -352,7 +349,7 @@ public class Solution {
         for (int i = 0; i < length; i++) {
             last[S.charAt(i) - 'a'] = i;
         }
-        List<Integer> partition = new ArrayList<Integer>();
+        List<Integer> partition = new ArrayList<>();
         int start = 0, end = 0;
         for (int i = 0; i < length; i++) {
             end = Math.max(end, last[S.charAt(i) - 'a']);

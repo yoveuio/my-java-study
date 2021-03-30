@@ -9,6 +9,7 @@ import org.example.leetcode.ListNode;
  * @Date 2020/10/12 16:33
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode sentinel = new ListNode(0), cur = sentinel;

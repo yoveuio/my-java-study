@@ -1,5 +1,6 @@
 package org.example.dynamic_programming;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +17,26 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        boolean aa = solution.isMatch("aa", "a*");
-        System.out.println(aa);
+        int i = solution.coinChange(new int[]{1, 2147483647}, 2);
+        System.out.println(i);
+    }
+
+    /**
+     * 322. 零钱兑换
+     */
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 0; i <= amount; i++) {
+            for (int coin : coins) {
+                int carry = i + coin;
+                if (carry <= amount && carry > 0 && dp[i] != Integer.MAX_VALUE) {
+                    dp[i + coin] = Math.min(dp[i + coin], dp[i] + 1);
+                }
+            }
+        }
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }
 
     public boolean wordBreak(String s, List<String> wordDict) {

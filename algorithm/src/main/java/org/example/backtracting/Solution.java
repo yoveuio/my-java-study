@@ -16,6 +16,27 @@ public class Solution {
     List<Integer> t = new ArrayList<>();
     List<List<Integer>> ans = new ArrayList<>();
 
+    /**
+     * 301. 删除无效的括号
+     */
+    public List<String> removeInvalidParentheses(String s) {
+        int n = s.length();
+        int left = 0, right = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (s.charAt(i) == '(') {
+                left++;
+            } else if(s.charAt(i) == ')') {
+                right++;
+            }
+        }
+
+        return null;
+    }
+
+    private void _removeInvalidParentheses(String s, int height, int left, int right, StringBuilder b) {
+        if (height >= s.length()) return;
+    }
+
     public List<List<Integer>> subsets(int[] nums) {
         int n = nums.length;
         for (int mask = 0; mask < (1 << n); ++mask) {

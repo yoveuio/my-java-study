@@ -11,9 +11,8 @@ import java.util.*;
  * @Date 2020/9/14 19:49
  * @Version 1.0
  */
+@SuppressWarnings("unused")
 public class Search {
-
-
     /**
      * 用栈实现二叉树的前序遍历
      */
@@ -32,6 +31,22 @@ public class Search {
             if (node.left!=null) {
                 stack.push(node.left);
             }
+        }
+        return answer;
+    }
+
+    public static List<Integer> preorderTraversal2(TreeNode root) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        List<Integer> answer = new LinkedList<>();
+
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                answer.add(root.val);
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            root = root.right;
         }
         return answer;
     }
@@ -70,6 +85,23 @@ public class Search {
             if (root.right != null) {
                 stack.push(root.right);
             }
+        }
+        Collections.reverse(answer);
+        return answer;
+    }
+
+    public static List<Integer> postorderTraversal2(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        List<Integer> answer = new ArrayList<>();
+
+        while(!stack.isEmpty() || root !=null) {
+            while (root != null) {
+                answer.add(root.val);
+                stack.push(root);
+                root = root.right;
+            }
+            root = stack.pop();
+            root = root.left;
         }
         Collections.reverse(answer);
         return answer;
