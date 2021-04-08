@@ -9,6 +9,27 @@ package org.example.dichotomize;
  */
 @SuppressWarnings("unused")
 public class Solution {
+    public static void main(String[] args) {
+        System.out.println(~1);
+    }
+
+    /**
+     * 74. 搜索二维矩阵
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0) return false;
+        int n = matrix.length, m = matrix[0].length;
+        int l = 0, t = n - 1;
+        while (l < m && t >= 0) {
+            if (matrix[l][t] == target) return true;
+            else if (matrix[l][t] < target) {
+                l++;
+            } else {
+                t--;
+            }
+        }
+        return false;
+    }
 
     /**
      * 剑指 Offer 53 - I. 在排序数组中查找数字 I

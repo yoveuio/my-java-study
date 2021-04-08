@@ -15,6 +15,7 @@
         <module>tomcat-study</module>
         <module>netty_study</module>
         <module>spring-study</module>
+        <module>scala-study</module>
     </modules>
 
     <dependencies>
